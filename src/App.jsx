@@ -3,7 +3,6 @@ import { Provider } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { store } from './store/store'
-import { ThemeProvider } from './contexts/ThemeContext'
 import Layout from './components/Layout'
 import RoleBasedLayout from './components/RoleBasedLayout'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -38,9 +37,8 @@ import SuperAdminAdmins from './pages/superadmin/SuperAdminAdmins'
 function App() {
   return (
     <Provider store={store}>
-      <ThemeProvider>
-        <Router>
-          <div className="App">
+      <Router>
+        <div className="App">
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<Layout />}>
@@ -125,9 +123,8 @@ function App() {
             pauseOnHover
             theme="light"
           />
-          </div>
-        </Router>
-      </ThemeProvider>
+        </div>
+      </Router>
     </Provider>
   )
 }

@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 import { Home, MessageSquare, Car, Zap, AlertCircle, Users, FileText } from 'lucide-react'
 
-const ResidentSidebar = () => {
+const ResidentSidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const location = useLocation()
 
   const menuItems = [
@@ -14,10 +14,14 @@ const ResidentSidebar = () => {
     { path: '/services', icon: MessageSquare, label: 'Services' },
   ]
 
+  const handleLinkClick = () => {
+    if (setSidebarOpen) setSidebarOpen(false)
+  }
+
   return (
-    <div className="w-64 bg-white dark:bg-gray-800 shadow-lg h-screen">
+    <div className="w-64 bg-white shadow-lg h-screen overflow-y-auto">
       <div className="p-4">
-        <h2 className="text-lg font-semibold text-dark-blue dark:text-white">Resident Portal</h2>
+        <h2 className="text-lg font-semibold text-dark-blue">Resident Portal</h2>
       </div>
       <nav className="mt-4">
         {menuItems.map((item) => {
@@ -27,10 +31,11 @@ const ResidentSidebar = () => {
             <Link
               key={item.path}
               to={item.path}
+              onClick={handleLinkClick}
               className={`flex items-center px-4 py-3 text-sm font-medium transition-colors ${
                 isActive
                   ? 'bg-medium-green text-white'
-                  : 'text-gray-700 dark:text-gray-300 hover:bg-light-green dark:hover:bg-gray-700 hover:text-teal dark:hover:text-medium-green'
+                  : 'text-gray-700 hover:bg-light-green hover:text-teal'
               }`}
             >
               <Icon size={20} className="mr-3" />
