@@ -34,11 +34,13 @@ A modern React frontend for the Residential Management System, built with Vite, 
 ## Getting Started
 
 1. Install dependencies:
+
    ```bash
    npm install
    ```
 
 2. Start the development server:
+
    ```bash
    npm run dev
    ```
@@ -50,7 +52,7 @@ A modern React frontend for the Residential Management System, built with Vite, 
 
 ## API Integration
 
-The frontend integrates with the RMSB backend API running on `http://localhost:3000/api`. Key endpoints include:
+The frontend integrates with the RMSB backend API running on `https://rmsb-2wjb.onrender.com/api`. Key endpoints include:
 
 - Authentication: `/auth/login`, `/auth/register`
 - Dashboard: `/dashboard/resident`, `/dashboard/admin`

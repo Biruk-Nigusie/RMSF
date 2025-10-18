@@ -1,186 +1,225 @@
-import { useState, useEffect } from 'react'
-import { toast } from 'react-toastify'
-import { ekubEddirAPI } from '../services/api'
-import { Users, Plus, CreditCard, Calendar, DollarSign, Settings, Bell, Shuffle, UserPlus, MessageSquare } from 'lucide-react'
+import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import { ekubEddirAPI } from "../services/api";
+import {
+  Users,
+  Plus,
+  CreditCard,
+  Calendar,
+  DollarSign,
+  Settings,
+  Bell,
+  Shuffle,
+  UserPlus,
+  MessageSquare,
+} from "lucide-react";
 
 const EkubEddir = () => {
-  const [groups, setGroups] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [showCreateForm, setShowCreateForm] = useState(false)
-  const [showPayment, setShowPayment] = useState(false)
-  const [showManage, setShowManage] = useState(false)
-  const [selectedGroup, setSelectedGroup] = useState(null)
-  const [activeTab, setActiveTab] = useState('all')
+  const [groups, setGroups] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [showCreateForm, setShowCreateForm] = useState(false);
+  const [showPayment, setShowPayment] = useState(false);
+  const [showManage, setShowManage] = useState(false);
+  const [selectedGroup, setSelectedGroup] = useState(null);
+  const [activeTab, setActiveTab] = useState("all");
   const [createFormData, setCreateFormData] = useState({
-    name: '',
-    type: 'EKUB',
-    monthlyContribution: '',
-    maxMembers: '',
-    description: '',
-    telebirrPhone: '',
-    qrCodeFile: null
-  })
+    name: "",
+    type: "EKUB",
+    monthlyContribution: "",
+    maxMembers: "",
+    description: "",
+    telebirrPhone: "",
+    qrCodeFile: null,
+  });
   const [paymentData, setPaymentData] = useState({
-    amount: '',
-    method: 'CASH',
-    roundNo: 1
-  })
+    amount: "",
+    method: "CASH",
+    roundNo: 1,
+  });
 
   useEffect(() => {
-    fetchGroups()
-  }, [])
+    fetchGroups();
+  }, []);
 
   const fetchGroups = async () => {
     try {
-      const response = await ekubEddirAPI.getAll()
-      setGroups(response.data?.data || response.data || [])
+      const response = await ekubEddirAPI.getAll();
+      setGroups(response.data?.data || response.data || []);
     } catch (error) {
-      console.error('Failed to fetch groups:', error)
-      toast.error('Failed to fetch groups')
-      setGroups([])
+      console.error("Failed to fetch groups:", error);
+      toast.error("Failed to fetch groups");
+      setGroups([]);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const handleCreateGroup = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      const formData = new FormData()
-      formData.append('name', createFormData.name)
-      formData.append('type', createFormData.type)
-      formData.append('monthlyContribution', createFormData.monthlyContribution)
-      formData.append('maxMembers', createFormData.maxMembers)
-      formData.append('description', createFormData.description)
-      formData.append('telebirrPhone', createFormData.telebirrPhone)
+      const formData = new FormData();
+      formData.append("name", createFormData.name);
+      formData.append("type", createFormData.type);
+      formData.append(
+        "monthlyContribution",
+        createFormData.monthlyContribution
+      );
+      formData.append("maxMembers", createFormData.maxMembers);
+      formData.append("description", createFormData.description);
+      formData.append("telebirrPhone", createFormData.telebirrPhone);
       if (createFormData.qrCodeFile) {
-        formData.append('qrCodeFile', createFormData.qrCodeFile)
+        formData.append("qrCodeFile", createFormData.qrCodeFile);
       }
-      
-      await ekubEddirAPI.create(formData)
-      toast.success('Group created successfully!')
-      setShowCreateForm(false)
-      setCreateFormData({ name: '', type: 'EKUB', monthlyContribution: '', maxMembers: '', description: '', telebirrPhone: '', qrCodeFile: null })
-      fetchGroups()
+
+      await ekubEddirAPI.create(formData);
+      toast.success("Group created successfully!");
+      setShowCreateForm(false);
+      setCreateFormData({
+        name: "",
+        type: "EKUB",
+        monthlyContribution: "",
+        maxMembers: "",
+        description: "",
+        telebirrPhone: "",
+        qrCodeFile: null,
+      });
+      fetchGroups();
     } catch (error) {
-      console.error('Failed to create group:', error)
-      toast.error('Failed to create group')
+      console.error("Failed to create group:", error);
+      toast.error("Failed to create group");
     }
-  }
+  };
 
   const handleJoinRequest = async (groupId) => {
     try {
-      await ekubEddirAPI.join(groupId)
-      toast.success('Join request sent!')
-      fetchGroups()
+      await ekubEddirAPI.join(groupId);
+      toast.success("Join request sent!");
+      fetchGroups();
     } catch (error) {
-      console.error('Failed to send join request:', error)
-      toast.error('Failed to send join request')
+      console.error("Failed to send join request:", error);
+      toast.error("Failed to send join request");
     }
-  }
+  };
 
   const handleApproveJoin = async (groupId, requestId) => {
     try {
-      await ekubEddirAPI.approveJoin(groupId, requestId)
-      toast.success('Member approved!')
-      fetchGroups()
+      await ekubEddirAPI.approveJoin(groupId, requestId);
+      toast.success("Member approved!");
+      fetchGroups();
     } catch (error) {
-      console.error('Failed to approve member:', error)
-      toast.error('Failed to approve member')
+      console.error("Failed to approve member:", error);
+      toast.error("Failed to approve member");
     }
-  }
+  };
 
   const handleSelectWinner = async (groupId) => {
-    if (window.confirm('Are you sure you want to select a winner? This action cannot be undone.')) {
+    if (
+      window.confirm(
+        "Are you sure you want to select a winner? This action cannot be undone."
+      )
+    ) {
       try {
-        const response = await ekubEddirAPI.selectWinner(groupId)
-        toast.success(`🏆 Winner selected: ${response.data?.winner || 'Random member'}!`)
-        fetchGroups()
+        const response = await ekubEddirAPI.selectWinner(groupId);
+        toast.success(
+          `🏆 Winner selected: ${response.data?.winner || "Random member"}!`
+        );
+        fetchGroups();
       } catch (error) {
-        console.error('Failed to select winner:', error)
-        toast.error(error.response?.data?.error || 'Failed to select winner')
+        console.error("Failed to select winner:", error);
+        toast.error(error.response?.data?.error || "Failed to select winner");
       }
     }
-  }
+  };
 
   const handleSendReminder = async (groupId) => {
     try {
-      const response = await ekubEddirAPI.sendReminder(groupId)
-      const { unpaidCount, totalMembers } = response.data
-      toast.success(`📢 Reminders sent to ${unpaidCount} of ${totalMembers} members!`)
+      const response = await ekubEddirAPI.sendReminder(groupId);
+      const { unpaidCount, totalMembers } = response.data;
+      toast.success(
+        `📢 Reminders sent to ${unpaidCount} of ${totalMembers} members!`
+      );
     } catch (error) {
-      console.error('Failed to send reminders:', error)
-      toast.error('Failed to send reminders')
+      console.error("Failed to send reminders:", error);
+      toast.error("Failed to send reminders");
     }
-  }
+  };
 
   const handlePayment = async () => {
     try {
       if (!paymentData.proofFile) {
-        toast.error('Please upload payment proof')
-        return
+        toast.error("Please upload payment proof");
+        return;
       }
-      
-      const formData = new FormData()
-      formData.append('amount', selectedGroup.monthlyContribution)
-      formData.append('method', 'TELEBIRR')
-      formData.append('roundNo', 1)
-      formData.append('proofFile', paymentData.proofFile)
-      
-      await ekubEddirAPI.makePayment(selectedGroup.id, formData)
-      toast.success('Payment submitted successfully!')
-      setShowPayment(false)
-      setSelectedGroup(null)
-      setPaymentData({ amount: '', method: 'TELEBIRR', roundNo: 1, proofFile: null })
-      fetchGroups()
+
+      const formData = new FormData();
+      formData.append("amount", selectedGroup.monthlyContribution);
+      formData.append("method", "TELEBIRR");
+      formData.append("roundNo", 1);
+      formData.append("proofFile", paymentData.proofFile);
+
+      await ekubEddirAPI.makePayment(selectedGroup.id, formData);
+      toast.success("Payment submitted successfully!");
+      setShowPayment(false);
+      setSelectedGroup(null);
+      setPaymentData({
+        amount: "",
+        method: "TELEBIRR",
+        roundNo: 1,
+        proofFile: null,
+      });
+      fetchGroups();
     } catch (error) {
-      console.error('Payment failed:', error)
-      toast.error('Payment failed')
+      console.error("Payment failed:", error);
+      toast.error("Payment failed");
     }
-  }
+  };
 
   const handlePaymentChange = (e) => {
     setPaymentData({
       ...paymentData,
-      [e.target.name]: e.target.value
-    })
-  }
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleCreateFormChange = (e) => {
     setCreateFormData({
       ...createFormData,
-      [e.target.name]: e.target.value
-    })
-  }
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const getTypeColor = (type) => {
-    return type === 'EKUB' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'
-  }
+    return type === "EKUB"
+      ? "bg-blue-100 text-blue-800"
+      : "bg-green-100 text-green-800";
+  };
 
   const getStatusColor = (status) => {
-    return status === 'ACTIVE' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-  }
+    return status === "ACTIVE"
+      ? "bg-green-100 text-green-800"
+      : "bg-red-100 text-red-800";
+  };
 
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-medium-green"></div>
       </div>
-    )
+    );
   }
 
-  const filteredGroups = groups.filter(group => {
-    if (activeTab === 'my') return group.isMember
-    if (activeTab === 'admin') return group.isAdmin
-    return true
-  })
+  const filteredGroups = groups.filter((group) => {
+    if (activeTab === "my") return group.isMember;
+    if (activeTab === "admin") return group.isAdmin;
+    return true;
+  });
 
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-medium-green"></div>
       </div>
-    )
+    );
   }
 
   return (
@@ -403,7 +442,7 @@ const EkubEddir = () => {
                     {selectedGroup.qrCodePath ? (
                       <div>
                         <img
-                          src={`http://localhost:3000/uploads/qr-codes/${selectedGroup.qrCodePath}`}
+                          src={`https://rmsb-2wjb.onrender.com/uploads/qr-codes/${selectedGroup.qrCodePath}`}
                           alt="Payment QR Code"
                           className="pt-4 ml-auto mr-auto w-100 h-100 object-cover flex align-items-center justify-content-center"
                           onLoad={() =>
@@ -419,7 +458,7 @@ const EkubEddir = () => {
                             );
                             console.error(
                               "Full URL:",
-                              `http://localhost:3000/uploads/qr-codes/${selectedGroup.qrCodePath}`
+                              `https://rmsb-2wjb.onrender.com/uploads/qr-codes/${selectedGroup.qrCodePath}`
                             );
                             e.target.style.display = "none";
                             e.target.nextElementSibling.style.display = "flex";
@@ -731,6 +770,6 @@ const EkubEddir = () => {
       )}
     </div>
   );
-}
+};
 
-export default EkubEddir
+export default EkubEddir;
