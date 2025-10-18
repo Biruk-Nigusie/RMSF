@@ -15,9 +15,9 @@ const ResidentSidebar = () => {
   ]
 
   return (
-    <div className="w-64 bg-white shadow-lg h-screen">
+    <div className="w-64 bg-white dark:bg-gray-800 shadow-lg h-screen">
       <div className="p-4">
-        <h2 className="text-lg font-semibold text-dark-blue">Resident Portal</h2>
+        <h2 className="text-lg font-semibold text-dark-blue dark:text-white">Resident Portal</h2>
       </div>
       <nav className="mt-4">
         {menuItems.map((item) => {
@@ -30,7 +30,7 @@ const ResidentSidebar = () => {
               className={`flex items-center px-4 py-3 text-sm font-medium transition-colors ${
                 isActive
                   ? 'bg-medium-green text-white'
-                  : 'text-gray-700 hover:bg-light-green hover:text-teal'
+                  : 'text-gray-700 dark:text-gray-300 hover:bg-light-green dark:hover:bg-gray-700 hover:text-teal dark:hover:text-medium-green'
               }`}
             >
               <Icon size={20} className="mr-3" />
