@@ -1,25 +1,43 @@
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout } from '../store/authSlice'
-import { LogOut, User } from 'lucide-react'
+import { useTheme } from '../contexts/ThemeContext'
+import { LogOut, User, Moon, Sun, Menu, X } from 'lucide-react'
 
 const Navbar = () => {
   const { isAuthenticated, user } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
+  const { isDark, toggleTheme, sidebarOpen, toggleSidebar } = useTheme()
 
   const handleLogout = () => {
     dispatch(logout())
   }
 
   return (
-    <nav className="bg-dark-blue text-white shadow-lg">
+    <nav className="bg-dark-blue dark:bg-gray-900 text-white shadow-lg">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
-          <Link to="/" className="text-xl font-bold">
-            RMS
-          </Link>
+          <div className="flex items-center space-x-4">
+            {isAuthenticated && (
+              <button
+                onClick={toggleSidebar}
+                className="hover:text-medium-green transition-colors"
+              >
+                {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
+              </button>
+            )}
+            <Link to="/" className="text-xl font-bold">
+              RMS
+            </Link>
+          </div>
           
           <div className="flex items-center space-x-6">
+            <button
+              onClick={toggleTheme}
+              className="hover:text-medium-green transition-colors"
+            >
+              {isDark ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
             {isAuthenticated ? (
               <>
                 <div className="flex items-center space-x-2">
