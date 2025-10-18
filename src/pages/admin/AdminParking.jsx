@@ -187,36 +187,37 @@ const AdminParking = () => {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-dark-blue">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 sm:mb-8 gap-4">
+        <h1 className="text-2xl sm:text-3xl font-bold text-dark-blue">
           Parking Management
         </h1>
         <button
           onClick={() => setShowAddSlots(true)}
-          className="bg-medium-green hover:bg-teal text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors"
+          className="bg-medium-green hover:bg-teal text-white px-4 py-2 rounded-lg flex items-center justify-center space-x-2 transition-colors text-sm sm:text-base"
         >
           <Plus size={20} />
-          <span>Create Parking Area</span>
+          <span className="hidden sm:inline">Create Parking Area</span>
+          <span className="sm:hidden">Add Slots</span>
         </button>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div className="bg-white rounded-lg shadow-lg p-6">
-          <h3 className="text-lg font-semibold text-teal">Total Slots</h3>
-          <p className="text-2xl font-bold text-dark-blue">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
+        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+          <h3 className="text-sm sm:text-lg font-semibold text-teal">Total Slots</h3>
+          <p className="text-xl sm:text-2xl font-bold text-dark-blue">
             {parkingSlots.length}
           </p>
         </div>
-        <div className="bg-white rounded-lg shadow-lg p-6">
-          <h3 className="text-lg font-semibold text-teal">Occupied</h3>
-          <p className="text-2xl font-bold text-red-600">
+        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+          <h3 className="text-sm sm:text-lg font-semibold text-teal">Occupied</h3>
+          <p className="text-xl sm:text-2xl font-bold text-red-600">
             {parkingSlots.filter((slot) => slot.isOccupied).length}
           </p>
         </div>
-        <div className="bg-white rounded-lg shadow-lg p-6">
-          <h3 className="text-lg font-semibold text-teal">Available</h3>
-          <p className="text-2xl font-bold text-green-600">
+        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+          <h3 className="text-sm sm:text-lg font-semibold text-teal">Available</h3>
+          <p className="text-xl sm:text-2xl font-bold text-green-600">
             {
               parkingSlots.filter(
                 (slot) => !slot.isOccupied && slot.status !== "MAINTENANCE"
@@ -224,9 +225,9 @@ const AdminParking = () => {
             }
           </p>
         </div>
-        <div className="bg-white rounded-lg shadow-lg p-6">
-          <h3 className="text-lg font-semibold text-teal">Pending Requests</h3>
-          <p className="text-2xl font-bold text-yellow-600">
+        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+          <h3 className="text-sm sm:text-lg font-semibold text-teal">Pending</h3>
+          <p className="text-xl sm:text-2xl font-bold text-yellow-600">
             {parkingRequests.filter((req) => req.status === "PENDING").length}
           </p>
         </div>
@@ -310,14 +311,14 @@ const AdminParking = () => {
       )}
 
       {/* Parking Requests */}
-      <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-        <h2 className="text-xl font-semibold text-teal mb-6">
+      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-6 sm:mb-8">
+        <h2 className="text-lg sm:text-xl font-semibold text-teal mb-4 sm:mb-6">
           Parking Requests
         </h2>
 
         {parkingRequests.length > 0 ? (
           <div className="overflow-x-auto">
-            <table className="min-w-full table-auto">
+            <table className="min-w-full table-auto text-sm">
               <thead className="bg-light-green">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-dark-blue uppercase tracking-wider">
@@ -423,28 +424,23 @@ const AdminParking = () => {
       </div>
 
       {/* Visual Parking Grid */}
-      <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-        <h2 className="text-xl font-semibold text-teal mb-6">Parking Layout</h2>
-        <div
-          className="grid gap-2 mb-6"
-          style={{
-            gridTemplateColumns: `repeat(${gridSize.cols}, minmax(0, 1fr))`,
-          }}
-        >
+      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-6 sm:mb-8">
+        <h2 className="text-lg sm:text-xl font-semibold text-teal mb-4 sm:mb-6">Parking Layout</h2>
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2 sm:gap-3 mb-4 sm:mb-6">
           {parkingSlots.map((slot) => (
             <div
               key={slot.id}
-              className={`relative p-3 rounded-lg border-2 text-center cursor-pointer hover:opacity-80 ${getSlotColor(
+              className={`relative p-2 sm:p-3 rounded-lg border-2 text-center cursor-pointer hover:opacity-80 min-h-[90px] sm:min-h-[100px] flex flex-col justify-center ${getSlotColor(
                 slot
               )}`}
               onClick={() => handleSlotClick(slot)}
             >
-              <div className="text-2xl mb-1">{getSlotIcon(slot)}</div>
-              <div className="text-xs font-bold text-dark-blue">
+              <div className="text-lg sm:text-2xl mb-1">{getSlotIcon(slot)}</div>
+              <div className="text-xs sm:text-sm font-bold text-dark-blue">
                 {slot.slotNumber}
               </div>
               <div className="text-xs text-blue-600 font-semibold">
-                {slot.price} ETB/mo
+                {slot.price} ETB
               </div>
               {slot.isOccupied && slot.resident && (
                 <div className="text-xs text-gray-600 mt-1 truncate">
@@ -454,10 +450,10 @@ const AdminParking = () => {
             </div>
           ))}
           <div
-            className="relative p-3 rounded-lg border-2 border-dashed border-gray-400 text-center cursor-pointer hover:bg-gray-50 bg-gray-100"
+            className="relative p-2 sm:p-3 rounded-lg border-2 border-dashed border-gray-400 text-center cursor-pointer hover:bg-gray-50 bg-gray-100 min-h-[90px] sm:min-h-[100px] flex flex-col justify-center"
             onClick={handleAddSingleSlot}
           >
-            <div className="text-2xl mb-1 text-gray-400">+</div>
+            <div className="text-lg sm:text-2xl mb-1 text-gray-400">+</div>
             <div className="text-xs font-bold text-gray-500">Add Spot</div>
           </div>
         </div>

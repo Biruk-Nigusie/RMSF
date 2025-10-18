@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 import { Home, Building, Shield, Activity, Settings, Database } from 'lucide-react'
 
-const SuperAdminSidebar = () => {
+const SuperAdminSidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const location = useLocation()
 
   const menuItems = [
@@ -13,8 +13,12 @@ const SuperAdminSidebar = () => {
     { path: '/super-admin/backup', icon: Database, label: 'Data Management' },
   ]
 
+  const handleLinkClick = () => {
+    if (setSidebarOpen) setSidebarOpen(false)
+  }
+
   return (
-    <div className="w-64 bg-white shadow-lg h-screen">
+    <div className="w-64 bg-white shadow-lg h-screen overflow-y-auto">
       <div className="p-4">
         <h2 className="text-lg font-semibold text-dark-blue">Super Admin</h2>
       </div>
@@ -26,6 +30,7 @@ const SuperAdminSidebar = () => {
             <Link
               key={item.path}
               to={item.path}
+              onClick={handleLinkClick}
               className={`flex items-center px-4 py-3 text-sm font-medium transition-colors ${
                 isActive
                   ? 'bg-medium-green text-white'

@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 import { Home, Users, MessageSquare, Car, Zap, AlertCircle, FileText, DollarSign, Settings } from 'lucide-react'
 
-const AdminSidebar = () => {
+const AdminSidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const location = useLocation()
 
   const menuItems = [
@@ -17,8 +17,12 @@ const AdminSidebar = () => {
     { path: '/admin/settings', icon: Settings, label: 'Settings' },
   ]
 
+  const handleLinkClick = () => {
+    if (setSidebarOpen) setSidebarOpen(false)
+  }
+
   return (
-    <div className="w-64 bg-white shadow-lg h-screen">
+    <div className="w-64 bg-white shadow-lg h-screen overflow-y-auto">
       <div className="p-4">
         <h2 className="text-lg font-semibold text-dark-blue">Admin Portal</h2>
       </div>
@@ -30,6 +34,7 @@ const AdminSidebar = () => {
             <Link
               key={item.path}
               to={item.path}
+              onClick={handleLinkClick}
               className={`flex items-center px-4 py-3 text-sm font-medium transition-colors ${
                 isActive
                   ? 'bg-medium-green text-white'
