@@ -65,38 +65,38 @@ const AdminComplaints = () => {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-dark-blue">Complaint Management</h1>
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold text-dark-blue">Complaint Management</h1>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div className="bg-white rounded-lg shadow-lg p-6">
-          <h3 className="text-lg font-semibold text-teal">Total</h3>
-          <p className="text-2xl font-bold text-dark-blue">{Array.isArray(complaints) ? complaints.length : 0}</p>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
+        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+          <h3 className="text-sm sm:text-lg font-semibold text-teal">Total</h3>
+          <p className="text-xl sm:text-2xl font-bold text-dark-blue">{Array.isArray(complaints) ? complaints.length : 0}</p>
         </div>
-        <div className="bg-white rounded-lg shadow-lg p-6">
-          <h3 className="text-lg font-semibold text-teal">Open</h3>
-          <p className="text-2xl font-bold text-red-600">
+        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+          <h3 className="text-sm sm:text-lg font-semibold text-teal">Open</h3>
+          <p className="text-xl sm:text-2xl font-bold text-red-600">
             {Array.isArray(complaints) ? complaints.filter(c => c.status === 'OPEN').length : 0}
           </p>
         </div>
-        <div className="bg-white rounded-lg shadow-lg p-6">
-          <h3 className="text-lg font-semibold text-teal">In Progress</h3>
-          <p className="text-2xl font-bold text-yellow-600">
+        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+          <h3 className="text-sm sm:text-lg font-semibold text-teal">In Progress</h3>
+          <p className="text-xl sm:text-2xl font-bold text-yellow-600">
             {Array.isArray(complaints) ? complaints.filter(c => c.status === 'IN_PROGRESS').length : 0}
           </p>
         </div>
-        <div className="bg-white rounded-lg shadow-lg p-6">
-          <h3 className="text-lg font-semibold text-teal">Resolved</h3>
-          <p className="text-2xl font-bold text-green-600">
+        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+          <h3 className="text-sm sm:text-lg font-semibold text-teal">Resolved</h3>
+          <p className="text-xl sm:text-2xl font-bold text-green-600">
             {Array.isArray(complaints) ? complaints.filter(c => c.status === 'RESOLVED').length : 0}
           </p>
         </div>
       </div>
 
-      {/* Complaints Table */}
-      <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+      {/* Complaints Table - Desktop */}
+      <div className="hidden lg:block bg-white rounded-lg shadow-lg overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full table-auto">
             <thead className="bg-light-green">
@@ -187,6 +187,54 @@ const AdminComplaints = () => {
             </tbody>
           </table>
         </div>
+      </div>
+
+      {/* Complaints Cards - Mobile */}
+      <div className="lg:hidden space-y-4">
+        {Array.isArray(complaints) && complaints.map((complaint) => (
+          <div key={complaint.id} className="bg-white rounded-lg shadow-lg p-4">
+            <div className="flex justify-between items-start mb-3">
+              <div>
+                <h3 className="font-medium text-gray-900">{complaint.resident?.fullName}</h3>
+                <p className="text-sm text-gray-500">Block {complaint.resident?.block}</p>
+              </div>
+              <div className="flex space-x-2">
+                <button 
+                  onClick={() => {
+                    setSelectedComplaint(complaint)
+                    setShowModal(true)
+                  }}
+                  className="text-blue-600 hover:text-blue-900"
+                >
+                  <Eye size={16} />
+                </button>
+                {complaint.status !== 'RESOLVED' && (
+                  <button 
+                    onClick={() => updateComplaintStatus(complaint.id, 'RESOLVED')}
+                    className="text-green-600 hover:text-green-900"
+                  >
+                    <CheckCircle size={16} />
+                  </button>
+                )}
+              </div>
+            </div>
+            <div className="mb-3">
+              <p className="text-sm text-gray-900">{complaint.description}</p>
+            </div>
+            <div className="flex flex-wrap gap-2 mb-3">
+              <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getCategoryColor(complaint.category)}`}>
+                {complaint.category}
+              </span>
+              <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(complaint.status)}`}>
+                {complaint.status}
+              </span>
+            </div>
+            <div className="text-xs text-gray-500">
+              <p>Phone: {complaint.resident?.phone}</p>
+              <p>Date: {new Date(complaint.createdAt).toLocaleDateString()}</p>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   )

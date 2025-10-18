@@ -56,13 +56,13 @@ const AdminResidents = () => {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-dark-blue">Resident Management</h1>
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold text-dark-blue">Resident Management</h1>
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-6 sm:mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Block
@@ -109,8 +109,8 @@ const AdminResidents = () => {
         </div>
       </div>
 
-      {/* Residents Table */}
-      <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+      {/* Residents Table - Desktop */}
+      <div className="hidden lg:block bg-white rounded-lg shadow-lg overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full table-auto">
             <thead className="bg-light-green">
@@ -195,6 +195,69 @@ const AdminResidents = () => {
             </tbody>
           </table>
         </div>
+      </div>
+
+      {/* Residents Cards - Mobile */}
+      <div className="lg:hidden space-y-4">
+        {residents.map((resident) => (
+          <div key={resident.id} className="bg-white rounded-lg shadow-lg p-4">
+            <div className="flex justify-between items-start mb-3">
+              <div>
+                <h3 className="font-medium text-gray-900">{resident.fullName}</h3>
+                {resident.email && (
+                  <p className="text-sm text-gray-500">{resident.email}</p>
+                )}
+              </div>
+              <div className="flex space-x-2">
+                <button className="text-blue-600 hover:text-blue-900">
+                  <Eye size={16} />
+                </button>
+                <button className="text-green-600 hover:text-green-900">
+                  <Edit size={16} />
+                </button>
+                <button 
+                  onClick={() => handleDelete(resident.id)}
+                  className="text-red-600 hover:text-red-900"
+                >
+                  <Trash2 size={16} />
+                </button>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-3 text-sm">
+              <div>
+                <span className="text-gray-600">Phone:</span>
+                <p className="font-medium">{resident.phone}</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Location:</span>
+                <p className="font-medium">Block {resident.block} - {resident.houseNo}</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Family:</span>
+                <p className="font-medium">{resident.familyMembers} members</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Status:</span>
+                <div className="flex space-x-2 mt-1">
+                  <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                    resident.ownershipType === 'OWNED' 
+                      ? 'bg-green-100 text-green-800' 
+                      : 'bg-blue-100 text-blue-800'
+                  }`}>
+                    {resident.ownershipType}
+                  </span>
+                  <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                    resident.status === 'ACTIVE' 
+                      ? 'bg-green-100 text-green-800' 
+                      : 'bg-red-100 text-red-800'
+                  }`}>
+                    {resident.status}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   )

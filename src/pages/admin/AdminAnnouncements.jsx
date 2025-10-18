@@ -94,25 +94,26 @@ const AdminAnnouncements = () => {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-dark-blue">Announcement Management</h1>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 sm:mb-8 gap-4">
+        <h1 className="text-2xl sm:text-3xl font-bold text-dark-blue">Announcement Management</h1>
         <button
           onClick={() => setShowForm(true)}
-          className="bg-medium-green hover:bg-teal text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors"
+          className="bg-medium-green hover:bg-teal text-white px-4 py-2 rounded-lg flex items-center justify-center space-x-2 transition-colors text-sm sm:text-base"
         >
           <Plus size={20} />
-          <span>New Announcement</span>
+          <span className="hidden sm:inline">New Announcement</span>
+          <span className="sm:hidden">New</span>
         </button>
       </div>
 
       {/* Create Form */}
       {showForm && (
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold text-teal mb-4">
+        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-6 sm:mb-8">
+          <h2 className="text-lg sm:text-xl font-semibold text-teal mb-4">
             {editingId ? 'Edit Announcement' : 'Create New Announcement'}
           </h2>
           <form onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Title
@@ -177,37 +178,37 @@ const AdminAnnouncements = () => {
       )}
 
       {/* Announcements List */}
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         {announcements.map((announcement) => (
-          <div key={announcement.id} className="bg-white rounded-lg shadow-lg p-6">
-            <div className="flex justify-between items-start mb-4">
-              <div>
-                <h3 className="text-xl font-semibold text-dark-blue mb-2">
+          <div key={announcement.id} className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-3 sm:mb-4 gap-3 sm:gap-0">
+              <div className="flex-1">
+                <h3 className="text-lg sm:text-xl font-semibold text-dark-blue mb-2">
                   {announcement.title}
                 </h3>
-                <div className="flex items-center space-x-4 text-sm text-gray-500">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm text-gray-500">
                   <span>{new Date(announcement.createdAt).toLocaleDateString()}</span>
-                  <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">
+                  <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs w-fit">
                     {announcement.targetAudience}
                   </span>
                 </div>
               </div>
-              <div className="flex space-x-2">
+              <div className="flex space-x-2 self-start">
                 <button 
                   onClick={() => handleEdit(announcement)}
-                  className="text-green-600 hover:text-green-900"
+                  className="text-green-600 hover:text-green-900 p-1"
                 >
                   <Edit size={16} />
                 </button>
                 <button 
                   onClick={() => handleDelete(announcement.id)}
-                  className="text-red-600 hover:text-red-900"
+                  className="text-red-600 hover:text-red-900 p-1"
                 >
                   <Trash2 size={16} />
                 </button>
               </div>
             </div>
-            <p className="text-gray-700">{announcement.message}</p>
+            <p className="text-gray-700 text-sm sm:text-base">{announcement.message}</p>
           </div>
         ))}
       </div>
