@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+:root {
+  --color-light-green: #DDF4E7;
+  --color-medium-green: #67C090;
+  --color-teal: #26667F;
+  --color-dark-blue: #124170;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  color: #000000;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+* {
+  color: inherit;
+}
