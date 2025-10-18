@@ -304,14 +304,11 @@ const Parking = () => {
         </div>
 
         {/* Parking Grid */}
-        <div 
-          className="grid gap-2 mb-6"
-          style={{ gridTemplateColumns: `repeat(${gridSize.cols}, minmax(0, 1fr))` }}
-        >
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2 sm:gap-3 mb-6">
           {parkingSlots.map((slot) => (
             <div
               key={slot.id}
-              className={`relative p-3 rounded-lg border-2 text-center cursor-pointer transition-all hover:shadow-md ${
+              className={`relative p-2 sm:p-3 rounded-lg border-2 text-center cursor-pointer transition-all hover:shadow-md min-h-[80px] sm:min-h-[90px] flex flex-col justify-center ${
                 getSlotColor(slot)
               }`}
               onClick={() => {
@@ -321,8 +318,8 @@ const Parking = () => {
                 }
               }}
             >
-              <div className="text-2xl mb-1">{getSlotIcon(slot)}</div>
-              <div className="text-xs font-bold text-dark-blue">
+              <div className="text-lg sm:text-2xl mb-1">{getSlotIcon(slot)}</div>
+              <div className="text-xs sm:text-sm font-bold text-dark-blue">
                 {slot.slotNumber}
               </div>
               {slot.isOccupied && slot.resident && (
