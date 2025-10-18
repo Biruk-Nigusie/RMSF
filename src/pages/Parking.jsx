@@ -120,24 +120,24 @@ const Parking = () => {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-dark-blue mb-8">Parking Management</h1>
+      <h1 className="text-2xl sm:text-3xl font-bold text-dark-blue mb-6 sm:mb-8">Parking Management</h1>
 
       {/* My Requests */}
-      <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-        <h2 className="text-xl font-semibold text-teal mb-4">My Parking Requests</h2>
+      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-6 sm:mb-8">
+        <h2 className="text-lg sm:text-xl font-semibold text-teal mb-4">My Parking Requests</h2>
         {myRequests.length > 0 ? (
           <div className="space-y-3">
             {myRequests.map((request) => (
-              <div key={request.id} className="p-4 bg-gray-50 rounded-lg border">
-                <div className="flex justify-between items-start mb-2">
+              <div key={request.id} className="p-3 sm:p-4 bg-gray-50 rounded-lg border">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2 gap-2 sm:gap-0">
                   <div>
-                    <span className="font-medium text-lg">Slot {request.slotNumber}</span>
-                    <span className="text-sm text-gray-500 ml-2">
+                    <span className="font-medium text-base sm:text-lg">Slot {request.slotNumber}</span>
+                    <span className="text-xs sm:text-sm text-gray-500 block sm:inline sm:ml-2">
                       {new Date(request.requestDate).toLocaleDateString()}
                     </span>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-2">
+                    <span className={`px-2 sm:px-3 py-1 rounded-full text-xs font-semibold w-fit ${
                       request.status === 'PENDING' ? 'bg-yellow-100 text-yellow-800' :
                       request.status === 'APPROVED' ? 'bg-green-100 text-green-800' :
                       'bg-red-100 text-red-800'
@@ -199,22 +199,23 @@ const Parking = () => {
 
       {/* My Parking Slot */}
       {mySlot && (
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold text-teal flex items-center space-x-2">
-              <Car size={24} />
+        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-6 sm:mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-3 sm:gap-0">
+            <h2 className="text-lg sm:text-xl font-semibold text-teal flex items-center space-x-2">
+              <Car size={20} sm:size={24} />
               <span>My Parking Slot</span>
             </h2>
             <button
               onClick={() => setShowPayment(true)}
-              className="bg-medium-green hover:bg-teal text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors"
+              className="bg-medium-green hover:bg-teal text-white px-3 sm:px-4 py-2 rounded-lg flex items-center justify-center space-x-2 transition-colors text-sm sm:text-base"
             >
-              <CreditCard size={20} />
-              <span>Pay Monthly Fee</span>
+              <CreditCard size={16} sm:size={20} />
+              <span className="hidden sm:inline">Pay Monthly Fee</span>
+              <span className="sm:hidden">Pay Fee</span>
             </button>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
               <p className="text-sm text-gray-600">Slot Number</p>
               <p className="text-2xl font-bold text-dark-blue">{mySlot.slotNumber}</p>
@@ -233,8 +234,8 @@ const Parking = () => {
 
       {/* Request Form */}
       {showRequestForm && selectedSlot && (
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold text-teal mb-4">
+        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-6 sm:mb-8">
+          <h2 className="text-lg sm:text-xl font-semibold text-teal mb-4">
             Request Parking Slot {selectedSlot.slotNumber}
           </h2>
           <form onSubmit={handleSlotRequest}>
@@ -268,10 +269,10 @@ const Parking = () => {
               ></textarea>
             </div>
 
-            <div className="flex space-x-4">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <button
                 type="submit"
-                className="bg-medium-green hover:bg-teal text-white px-6 py-2 rounded-lg transition-colors flex items-center space-x-2"
+                className="bg-medium-green hover:bg-teal text-white px-4 sm:px-6 py-2 rounded-lg transition-colors flex items-center justify-center space-x-2 text-sm sm:text-base"
               >
                 <Upload size={16} />
                 <span>Submit Request</span>
@@ -282,7 +283,7 @@ const Parking = () => {
                   setShowRequestForm(false)
                   setSelectedSlot(null)
                 }}
-                className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg transition-colors"
+                className="bg-gray-500 hover:bg-gray-600 text-white px-4 sm:px-6 py-2 rounded-lg transition-colors text-sm sm:text-base"
               >
                 Cancel
               </button>
@@ -292,13 +293,13 @@ const Parking = () => {
       )}
 
       {/* Parking Grid */}
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-semibold text-teal flex items-center space-x-2">
-            <MapPin size={24} />
+      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6 gap-2 sm:gap-0">
+          <h2 className="text-lg sm:text-xl font-semibold text-teal flex items-center space-x-2">
+            <MapPin size={20} sm:size={24} />
             <span>Parking Layout</span>
           </h2>
-          <div className="text-sm text-gray-600">
+          <div className="text-xs sm:text-sm text-gray-600">
             Total: {parkingSlots.length} slots
           </div>
         </div>
@@ -337,30 +338,30 @@ const Parking = () => {
         </div>
 
         {/* Legend */}
-        <div className="flex items-center justify-center space-x-6 text-sm">
+        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs sm:text-sm">
           <div className="flex items-center space-x-2">
-            <div className="w-4 h-4 bg-green-200 border-2 border-green-400 rounded"></div>
+            <div className="w-3 h-3 sm:w-4 sm:h-4 bg-green-200 border-2 border-green-400 rounded"></div>
             <span>Available</span>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-4 h-4 bg-red-200 border-2 border-red-400 rounded"></div>
+            <div className="w-3 h-3 sm:w-4 sm:h-4 bg-red-200 border-2 border-red-400 rounded"></div>
             <span>Occupied</span>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-4 h-4 bg-yellow-200 border-2 border-yellow-400 rounded"></div>
+            <div className="w-3 h-3 sm:w-4 sm:h-4 bg-yellow-200 border-2 border-yellow-400 rounded"></div>
             <span>Maintenance</span>
           </div>
         </div>
         
-        <div className="mt-4 text-center text-sm text-gray-600">
+        <div className="mt-3 sm:mt-4 text-center text-xs sm:text-sm text-gray-600">
           Click on available slots to request parking
         </div>
       </div>
 
       {/* Payment Modal */}
       {showPayment && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-md">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg p-4 sm:p-6 w-full max-w-md">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-semibold">Pay Parking Fee</h3>
               <button

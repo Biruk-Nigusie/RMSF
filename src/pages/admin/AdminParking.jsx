@@ -235,11 +235,11 @@ const AdminParking = () => {
 
       {/* Add Slots Form */}
       {showAddSlots && (
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold text-teal mb-4">
+        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-6 sm:mb-8">
+          <h2 className="text-lg sm:text-xl font-semibold text-teal mb-4">
             Create New Parking Area
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Number of slots to add
@@ -266,7 +266,7 @@ const AdminParking = () => {
               />
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Telebirr Phone Number
@@ -293,16 +293,16 @@ const AdminParking = () => {
               />
             </div>
           </div>
-          <div className="flex space-x-2">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-2">
             <button
               onClick={handleAddSlots}
-              className="bg-medium-green hover:bg-teal text-white px-6 py-2 rounded-lg transition-colors"
+              className="bg-medium-green hover:bg-teal text-white px-4 sm:px-6 py-2 rounded-lg transition-colors text-sm sm:text-base"
             >
               Add Slots
             </button>
             <button
               onClick={() => setShowAddSlots(false)}
-              className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg transition-colors"
+              className="bg-gray-500 hover:bg-gray-600 text-white px-4 sm:px-6 py-2 rounded-lg transition-colors text-sm sm:text-base"
             >
               Cancel
             </button>
@@ -317,8 +317,10 @@ const AdminParking = () => {
         </h2>
 
         {parkingRequests.length > 0 ? (
-          <div className="overflow-x-auto">
-            <table className="min-w-full table-auto text-sm">
+          <>
+            {/* Desktop Table */}
+            <div className="hidden lg:block overflow-x-auto">
+              <table className="min-w-full table-auto text-sm">
               <thead className="bg-light-green">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-dark-blue uppercase tracking-wider">
@@ -414,8 +416,71 @@ const AdminParking = () => {
                   </tr>
                 ))}
               </tbody>
-            </table>
-          </div>
+              </table>
+            </div>
+
+            {/* Mobile Cards */}
+            <div className="lg:hidden space-y-4">
+              {parkingRequests.map((request) => (
+                <div key={request.id} className="bg-gray-50 rounded-lg p-4 border">
+                  <div className="flex justify-between items-start mb-3">
+                    <div>
+                      <h3 className="font-medium text-gray-900">{request.resident.fullName}</h3>
+                      <p className="text-sm text-gray-500">Block {request.resident.block} - {request.resident.houseNo}</p>
+                      <p className="text-sm text-gray-500">{request.resident.phone}</p>
+                    </div>
+                    <div className="flex space-x-2">
+                      {request.status === "PENDING" && (
+                        <>
+                          <button
+                            onClick={() => handleApproveRequest(request)}
+                            className="text-green-600 hover:text-green-900 p-1"
+                            title="Approve request"
+                          >
+                            <CheckCircle size={16} />
+                          </button>
+                          <button
+                            onClick={() => handleRejectRequest(request)}
+                            className="text-red-600 hover:text-red-900 p-1"
+                            title="Reject request"
+                          >
+                            <XCircle size={16} />
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3 text-sm mb-3">
+                    <div>
+                      <span className="text-gray-600">Slot:</span>
+                      <p className="font-medium">{request.slotNumber}</p>
+                    </div>
+                    <div>
+                      <span className="text-gray-600">Date:</span>
+                      <p className="font-medium">{new Date(request.requestDate).toLocaleDateString()}</p>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-2 mb-3">
+                    <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(request.status)}`}>
+                      {request.status}
+                    </span>
+                    {request.document && (
+                      <button
+                        onClick={() => {
+                          setSelectedRequest(request);
+                          setShowDocument(true);
+                        }}
+                        className="text-blue-600 hover:text-blue-900 flex items-center space-x-1 text-xs"
+                      >
+                        <FileText size={12} />
+                        <span>View Document</span>
+                      </button>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
         ) : (
           <div className="text-center py-8 text-gray-500">
             No parking requests found
