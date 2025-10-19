@@ -38,7 +38,7 @@ const Announcements = () => {
       <div className="space-y-6">
         {announcements.length > 0 ? (
           announcements.map((announcement) => (
-            <div key={announcement.id} className="bg-white rounded-lg shadow-lg p-6">
+            <div key={announcement.id} className="bg-white rounded-lg shadow-sm p-6">
               <div className="flex justify-between items-start mb-4">
                 <h2 className="text-2xl font-semibold text-dark-blue">
                   {announcement.title}
@@ -78,7 +78,7 @@ const Announcements = () => {
           ))
         ) : (
           <div className="text-center py-12">
-            <div className="bg-white rounded-lg shadow-lg p-8">
+            <div className="bg-white rounded-lg shadow-sm p-8">
               <h3 className="text-xl font-semibold text-gray-600 mb-4">
                 No Announcements Yet
               </h3>

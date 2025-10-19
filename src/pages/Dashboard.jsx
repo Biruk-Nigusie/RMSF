@@ -43,7 +43,7 @@ const Dashboard = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
-        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+        <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
           <div className="flex items-center justify-between mb-3 sm:mb-4">
             <h3 className="text-lg sm:text-xl font-semibold text-teal">My Complaints</h3>
             <AlertCircle className="text-medium-green" size={20} />
@@ -54,7 +54,7 @@ const Dashboard = () => {
           <p className="text-gray-600 text-sm sm:text-base">Active complaints</p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+        <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
           <div className="flex items-center justify-between mb-3 sm:mb-4">
             <h3 className="text-lg sm:text-xl font-semibold text-teal">Announcements</h3>
             <FileText className="text-medium-green" size={20} />
@@ -65,7 +65,7 @@ const Dashboard = () => {
           <p className="text-gray-600 text-sm sm:text-base">New announcements</p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+        <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
           <div className="flex items-center justify-between mb-3 sm:mb-4">
             <h3 className="text-lg sm:text-xl font-semibold text-teal">Parking</h3>
             <Car className="text-medium-green" size={20} />
@@ -76,7 +76,7 @@ const Dashboard = () => {
           <p className="text-gray-600 text-sm sm:text-base">Your parking slot</p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+        <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
           <div className="flex items-center justify-between mb-3 sm:mb-4">
             <h3 className="text-lg sm:text-xl font-semibold text-teal">Utilities</h3>
             <Zap className="text-medium-green" size={20} />
@@ -87,7 +87,7 @@ const Dashboard = () => {
           <p className="text-gray-600 text-sm sm:text-base">Pending bills</p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+        <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
           <div className="flex items-center justify-between mb-3 sm:mb-4">
             <h3 className="text-lg sm:text-xl font-semibold text-teal">Apartment</h3>
             <Home className="text-medium-green" size={20} />
@@ -98,7 +98,7 @@ const Dashboard = () => {
           <p className="text-gray-600 text-sm sm:text-base">Your unit</p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+        <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
           <div className="flex items-center justify-between mb-3 sm:mb-4">
             <h3 className="text-lg sm:text-xl font-semibold text-teal">Balance</h3>
             <DollarSign className="text-medium-green" size={20} />
@@ -110,7 +110,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+      <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
         <h3 className="text-lg sm:text-xl font-semibold text-teal mb-4">Recent Activity</h3>
         <div className="space-y-3">
           {dashboardData?.recentActivity?.length > 0 ? (

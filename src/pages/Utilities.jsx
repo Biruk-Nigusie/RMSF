@@ -1,89 +1,100 @@
-import { useState, useEffect } from 'react'
-import { utilitiesAPI } from '../services/api'
-import { toast } from 'react-toastify'
-import { Zap, Droplets, CreditCard, AlertTriangle } from 'lucide-react'
+import { useState, useEffect } from "react";
+import { utilitiesAPI } from "../services/api";
+import { toast } from "react-toastify";
+import { Zap, Droplets, CreditCard, AlertTriangle } from "lucide-react";
 
 const Utilities = () => {
-  const [utilities, setUtilities] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [showPayment, setShowPayment] = useState(false)
-  const [showReport, setShowReport] = useState(false)
-  const [selectedBill, setSelectedBill] = useState(null)
+  const [utilities, setUtilities] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [showPayment, setShowPayment] = useState(false);
+  const [showReport, setShowReport] = useState(false);
+  const [selectedBill, setSelectedBill] = useState(null);
   const [reportData, setReportData] = useState({
-    type: 'electricity',
-    description: '',
-    priority: 'medium'
-  })
+    type: "electricity",
+    description: "",
+    priority: "medium",
+  });
 
   useEffect(() => {
-    fetchUtilities()
-  }, [])
+    fetchUtilities();
+  }, []);
 
   const fetchUtilities = async () => {
     try {
-      const response = await utilitiesAPI.getAll()
-      setUtilities(response.data)
+      const response = await utilitiesAPI.getAll();
+      setUtilities(response.data);
     } catch (error) {
-      toast.error('Failed to fetch utilities')
+      toast.error("Failed to fetch utilities");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const handlePayment = async (billId) => {
     try {
-      await utilitiesAPI.pay(billId, { paymentMethod: 'online' })
-      toast.success('Payment successful!')
-      setShowPayment(false)
-      setSelectedBill(null)
-      fetchUtilities()
+      await utilitiesAPI.pay(billId, { paymentMethod: "online" });
+      toast.success("Payment successful!");
+      setShowPayment(false);
+      setSelectedBill(null);
+      fetchUtilities();
     } catch (error) {
-      toast.error('Payment failed')
+      toast.error("Payment failed");
     }
-  }
+  };
 
   const handleReportIssue = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      await utilitiesAPI.reportIssue(reportData)
-      toast.success('Issue reported successfully!')
-      setShowReport(false)
-      setReportData({ type: 'electricity', description: '', priority: 'medium' })
+      await utilitiesAPI.reportIssue(reportData);
+      toast.success("Issue reported successfully!");
+      setShowReport(false);
+      setReportData({
+        type: "electricity",
+        description: "",
+        priority: "medium",
+      });
     } catch (error) {
-      toast.error('Failed to report issue')
+      toast.error("Failed to report issue");
     }
-  }
+  };
 
   const handleReportChange = (e) => {
     setReportData({
       ...reportData,
-      [e.target.name]: e.target.value
-    })
-  }
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const getUtilityIcon = (type) => {
     switch (type) {
-      case 'electricity': return <Zap className="text-yellow-500" size={24} />
-      case 'water': return <Droplets className="text-blue-500" size={24} />
-      default: return <Zap className="text-gray-500" size={24} />
+      case "electricity":
+        return <Zap className="text-yellow-500" size={24} />;
+      case "water":
+        return <Droplets className="text-blue-500" size={24} />;
+      default:
+        return <Zap className="text-gray-500" size={24} />;
     }
-  }
+  };
 
   const getStatusColor = (status) => {
     switch (status) {
-      case 'paid': return 'bg-green-100 text-green-800'
-      case 'pending': return 'bg-yellow-100 text-yellow-800'
-      case 'overdue': return 'bg-red-100 text-red-800'
-      default: return 'bg-gray-100 text-gray-800'
+      case "paid":
+        return "bg-green-100 text-green-800";
+      case "pending":
+        return "bg-yellow-100 text-yellow-800";
+      case "overdue":
+        return "bg-red-100 text-red-800";
+      default:
+        return "bg-gray-100 text-gray-800";
     }
-  }
+  };
 
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-medium-green"></div>
       </div>
-    )
+    );
   }
 
   return (
@@ -101,8 +112,10 @@ const Utilities = () => {
 
       {/* Report Issue Form */}
       {showReport && (
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold text-teal mb-4">Report Utility Issue</h2>
+        <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
+          <h2 className="text-xl font-semibold text-teal mb-4">
+            Report Utility Issue
+          </h2>
           <form onSubmit={handleReportIssue}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <div>
@@ -177,16 +190,18 @@ const Utilities = () => {
       <div className="grid gap-6">
         {utilities.length > 0 ? (
           utilities.map((utility) => (
-            <div key={utility.id} className="bg-white rounded-lg shadow-lg p-6">
+            <div key={utility.id} className="bg-white rounded-lg shadow-sm p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center space-x-3">
                   {getUtilityIcon(utility.type)}
                   <div>
                     <h3 className="text-xl font-semibold text-dark-blue">
-                      {utility.type?.charAt(0).toUpperCase() + utility.type?.slice(1)} Bill
+                      {utility.type?.charAt(0).toUpperCase() +
+                        utility.type?.slice(1)}{" "}
+                      Bill
                     </h3>
                     <p className="text-gray-600">
-                      {new Date(utility.billingPeriod).toLocaleDateString()} - 
+                      {new Date(utility.billingPeriod).toLocaleDateString()} -
                       {new Date(utility.dueDate).toLocaleDateString()}
                     </p>
                   </div>
@@ -195,7 +210,11 @@ const Utilities = () => {
                   <p className="text-2xl font-bold text-dark-blue">
                     ${utility.amount}
                   </p>
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(utility.status)}`}>
+                  <span
+                    className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
+                      utility.status
+                    )}`}
+                  >
                     {utility.status?.toUpperCase()}
                   </span>
                 </div>
@@ -205,13 +224,15 @@ const Utilities = () => {
                 <div>
                   <p className="text-sm text-gray-600">Usage</p>
                   <p className="text-lg font-semibold text-dark-blue">
-                    {utility.usage} {utility.type === 'electricity' ? 'kWh' : 'gallons'}
+                    {utility.usage}{" "}
+                    {utility.type === "electricity" ? "kWh" : "gallons"}
                   </p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-600">Rate</p>
                   <p className="text-lg font-semibold text-dark-blue">
-                    ${utility.rate} per {utility.type === 'electricity' ? 'kWh' : 'gallon'}
+                    ${utility.rate} per{" "}
+                    {utility.type === "electricity" ? "kWh" : "gallon"}
                   </p>
                 </div>
                 <div>
@@ -222,7 +243,7 @@ const Utilities = () => {
                 </div>
               </div>
 
-              {utility.status !== 'paid' && (
+              {utility.status !== "paid" && (
                 <div className="flex justify-end">
                   <button
                     onClick={() => handlePayment(utility.id)}
@@ -237,7 +258,7 @@ const Utilities = () => {
           ))
         ) : (
           <div className="text-center py-12">
-            <div className="bg-white rounded-lg shadow-lg p-8">
+            <div className="bg-white rounded-lg shadow-sm p-8">
               <h3 className="text-xl font-semibold text-gray-600 mb-4">
                 No Utility Bills
               </h3>
@@ -249,7 +270,7 @@ const Utilities = () => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Utilities
+export default Utilities;

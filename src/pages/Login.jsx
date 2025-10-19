@@ -1,47 +1,47 @@
-import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate, Link } from 'react-router-dom'
-import { loginUser, clearError } from '../store/authSlice'
-import { toast } from 'react-toastify'
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, Link } from "react-router-dom";
+import { loginUser, clearError } from "../store/authSlice";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    phone: '',
-    password: '',
-    userType: 'resident'
-  })
+    phone: "",
+    password: "",
+    userType: "resident",
+  });
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const { isLoading, error } = useSelector((state) => state.auth)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isLoading, error } = useSelector((state) => state.auth);
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-    })
-  }
+    });
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      const result = await dispatch(loginUser(formData))
-      if (result.type === 'auth/login/fulfilled') {
-        toast.success('Login successful!')
-        navigate('/dashboard')
+      const result = await dispatch(loginUser(formData));
+      if (result.type === "auth/login/fulfilled") {
+        toast.success("Login successful!");
+        navigate("/dashboard");
       }
     } catch (error) {
-      toast.error('Login failed')
+      toast.error("Login failed");
     }
-  }
+  };
 
   return (
     <div className="flex items-center justify-center py-8">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+      <div className="bg-white p-8 rounded-lg shadow-sm w-full max-w-md">
         <h2 className="text-2xl font-bold text-dark-blue mb-6 text-center">
           Login to RMS
         </h2>
-        
+
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
             {error}
@@ -98,19 +98,19 @@ const Login = () => {
             disabled={isLoading}
             className="w-full bg-medium-green hover:bg-teal text-white font-bold py-2 px-4 rounded-lg transition-colors disabled:opacity-50"
           >
-            {isLoading ? 'Logging in...' : 'Login'}
+            {isLoading ? "Logging in..." : "Login"}
           </button>
         </form>
 
         <p className="mt-4 text-center text-gray-600">
-          Don't have an account?{' '}
+          Don't have an account?{" "}
           <Link to="/register" className="text-medium-green hover:text-teal">
             Register here
           </Link>
         </p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

@@ -37,14 +37,14 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       if (editing) return; // Don't fetch when editing
-      
+
       try {
         const response = await authAPI.getProfile();
         const profileUser = response.data;
-        
+
         // Update Redux store with fresh data from API
         dispatch(updateUser(profileUser));
-        
+
         setProfileData({
           fullName: profileUser.fullName || "",
           email: profileUser.email || "",
@@ -58,7 +58,7 @@ const Profile = () => {
         });
         setImagePreview(profileUser.profileImage || null);
       } catch (error) {
-        console.error('Failed to fetch profile:', error);
+        console.error("Failed to fetch profile:", error);
         if (user) {
           setProfileData({
             fullName: user.fullName || "",
@@ -73,7 +73,7 @@ const Profile = () => {
         }
       }
     };
-    
+
     fetchProfile();
   }, [user, dispatch, editing]);
 
@@ -113,9 +113,12 @@ const Profile = () => {
       }
 
       const response = await authAPI.updateProfile(updateData);
-      const updatedUser = { 
-        ...response.data, 
-        profileImage: updateData.profileImage || response.data.profileImage || user.profileImage 
+      const updatedUser = {
+        ...response.data,
+        profileImage:
+          updateData.profileImage ||
+          response.data.profileImage ||
+          user.profileImage,
       };
       dispatch(updateUser(updatedUser));
       toast.success("Profile updated successfully!");
@@ -158,7 +161,7 @@ const Profile = () => {
         </p>
       </div>
 
-      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+      <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
         {/* Profile Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
@@ -179,34 +182,44 @@ const Profile = () => {
                   <UploadButton
                     endpoint="profileImage"
                     onClientUploadComplete={async (res) => {
-                      console.log('=== UPLOAD COMPLETE DEBUG ===');
-                      console.log('Upload response:', res);
-                      
+                      console.log("=== UPLOAD COMPLETE DEBUG ===");
+                      console.log("Upload response:", res);
+
                       const imageUrl = res[0].ufsUrl || res[0].url;
-                      console.log('Image URL:', imageUrl);
-                      
+                      console.log("Image URL:", imageUrl);
+
                       setImagePreview(imageUrl);
-                      setProfileData(prev => ({ ...prev, profileImageUrl: imageUrl }));
-                      
+                      setProfileData((prev) => ({
+                        ...prev,
+                        profileImageUrl: imageUrl,
+                      }));
+
                       // Save image URL to database immediately
                       try {
-                        console.log('Sending profile update with data:', { profileImage: imageUrl });
-                        const response = await authAPI.updateProfile({ profileImage: imageUrl });
-                        console.log('Profile update response:', response);
-                        
+                        console.log("Sending profile update with data:", {
+                          profileImage: imageUrl,
+                        });
+                        const response = await authAPI.updateProfile({
+                          profileImage: imageUrl,
+                        });
+                        console.log("Profile update response:", response);
+
                         // Update Redux store with new profile image
-                        const updatedUser = { ...response.data, profileImage: imageUrl };
+                        const updatedUser = {
+                          ...response.data,
+                          profileImage: imageUrl,
+                        };
                         dispatch(updateUser(updatedUser));
-                        
+
                         toast.success("Profile image updated successfully!");
                       } catch (error) {
-                        console.error('=== PROFILE UPDATE ERROR ===');
-                        console.error('Error object:', error);
-                        console.error('Error response:', error.response);
-                        console.error('Error data:', error.response?.data);
-                        console.error('Error status:', error.response?.status);
-                        console.error('=== ERROR END ===');
-                        toast.error('Failed to save profile image');
+                        console.error("=== PROFILE UPDATE ERROR ===");
+                        console.error("Error object:", error);
+                        console.error("Error response:", error.response);
+                        console.error("Error data:", error.response?.data);
+                        console.error("Error status:", error.response?.status);
+                        console.error("=== ERROR END ===");
+                        toast.error("Failed to save profile image");
                       }
                     }}
                     onUploadError={(error) => {

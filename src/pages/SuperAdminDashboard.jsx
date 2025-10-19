@@ -1,32 +1,32 @@
-import { useEffect, useState } from 'react'
-import { dashboardAPI } from '../services/api'
-import { Building, Users, Shield, Activity } from 'lucide-react'
+import { useEffect, useState } from "react";
+import { dashboardAPI } from "../services/api";
+import { Building, Users, Shield, Activity } from "lucide-react";
 
 const SuperAdminDashboard = () => {
-  const [dashboardData, setDashboardData] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const [dashboardData, setDashboardData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchDashboard = async () => {
       try {
-        const response = await dashboardAPI.getSuper()
-        setDashboardData(response.data)
+        const response = await dashboardAPI.getSuper();
+        setDashboardData(response.data);
       } catch (error) {
-        console.error('Failed to fetch dashboard data:', error)
+        console.error("Failed to fetch dashboard data:", error);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
-    fetchDashboard()
-  }, [])
+    fetchDashboard();
+  }, []);
 
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-medium-green"></div>
       </div>
-    )
+    );
   }
 
   return (
@@ -39,7 +39,7 @@ const SuperAdminDashboard = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div className="bg-white rounded-lg shadow-lg p-6">
+        <div className="bg-white rounded-lg shadow-sm p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-xl font-semibold text-teal">Condominiums</h3>
             <Building className="text-medium-green" size={24} />
@@ -50,7 +50,7 @@ const SuperAdminDashboard = () => {
           <p className="text-gray-600">Total properties</p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-lg p-6">
+        <div className="bg-white rounded-lg shadow-sm p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-xl font-semibold text-teal">Admins</h3>
             <Shield className="text-medium-green" size={24} />
@@ -61,7 +61,7 @@ const SuperAdminDashboard = () => {
           <p className="text-gray-600">System administrators</p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-lg p-6">
+        <div className="bg-white rounded-lg shadow-sm p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-xl font-semibold text-teal">Residents</h3>
             <Users className="text-medium-green" size={24} />
@@ -72,7 +72,7 @@ const SuperAdminDashboard = () => {
           <p className="text-gray-600">Total residents</p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-lg p-6">
+        <div className="bg-white rounded-lg shadow-sm p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-xl font-semibold text-teal">Audit Logs</h3>
             <Activity className="text-medium-green" size={24} />
@@ -84,16 +84,22 @@ const SuperAdminDashboard = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <h3 className="text-xl font-semibold text-teal mb-4">Condominium Statistics</h3>
+      <div className="bg-white rounded-lg shadow-sm p-6">
+        <h3 className="text-xl font-semibold text-teal mb-4">
+          Condominium Statistics
+        </h3>
         <div className="overflow-x-auto">
           <table className="min-w-full table-auto">
             <thead>
               <tr className="bg-light-green">
                 <th className="px-4 py-2 text-left text-dark-blue">Name</th>
                 <th className="px-4 py-2 text-left text-dark-blue">Location</th>
-                <th className="px-4 py-2 text-left text-dark-blue">Total Blocks</th>
-                <th className="px-4 py-2 text-left text-dark-blue">Residents</th>
+                <th className="px-4 py-2 text-left text-dark-blue">
+                  Total Blocks
+                </th>
+                <th className="px-4 py-2 text-left text-dark-blue">
+                  Residents
+                </th>
                 <th className="px-4 py-2 text-left text-dark-blue">Status</th>
               </tr>
             </thead>
@@ -116,7 +122,7 @@ const SuperAdminDashboard = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SuperAdminDashboard
+export default SuperAdminDashboard;

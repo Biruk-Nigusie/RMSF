@@ -2,7 +2,7 @@ const About = () => {
   return (
     <div className="max-w-4xl mx-auto">
       <h1 className="text-3xl font-bold text-dark-blue mb-8">About RMS</h1>
-      <div className="bg-white rounded-lg shadow-lg p-8">
+      <div className="bg-white rounded-lg shadow-sm p-8">
         <p className="text-teal text-lg mb-6">
           The Residential Management System (RMS) is a comprehensive solution designed to streamline property management operations.
         </p>

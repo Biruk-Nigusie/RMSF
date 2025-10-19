@@ -39,7 +39,7 @@ const AdminDashboard = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
-        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+        <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
           <div className="flex items-center justify-between mb-3 sm:mb-4">
             <h3 className="text-lg sm:text-xl font-semibold text-teal">Total Residents</h3>
             <Users className="text-medium-green" size={20} />
@@ -50,7 +50,7 @@ const AdminDashboard = () => {
           <p className="text-gray-600 text-sm sm:text-base">Registered residents</p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+        <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
           <div className="flex items-center justify-between mb-3 sm:mb-4">
             <h3 className="text-lg sm:text-xl font-semibold text-teal">Total Complaints</h3>
             <AlertCircle className="text-medium-green" size={20} />
@@ -61,7 +61,7 @@ const AdminDashboard = () => {
           <p className="text-gray-600 text-sm sm:text-base">All complaints</p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+        <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
           <div className="flex items-center justify-between mb-3 sm:mb-4">
             <h3 className="text-lg sm:text-xl font-semibold text-teal">Pending</h3>
             <CheckCircle className="text-medium-green" size={20} />

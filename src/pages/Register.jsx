@@ -1,89 +1,89 @@
-import { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate, Link } from 'react-router-dom'
-import { registerUser } from '../store/authSlice'
-import { condominiumAPI } from '../services/api'
-import { toast } from 'react-toastify'
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, Link } from "react-router-dom";
+import { registerUser } from "../store/authSlice";
+import { condominiumAPI } from "../services/api";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    fullName: '',
-    phone: '',
-    email: '',
-    block: '',
-    houseNo: '',
-    ownershipType: 'OWNED',
-    ownerName: '',
+    fullName: "",
+    phone: "",
+    email: "",
+    block: "",
+    houseNo: "",
+    ownershipType: "OWNED",
+    ownerName: "",
     familyMembers: 1,
-    carPlate: '',
-    password: '',
-    confirmPassword: '',
-    condominiumId: ''
-  })
-  const [condominiums, setCondominiums] = useState([])
-  const [loadingCondominiums, setLoadingCondominiums] = useState(true)
+    carPlate: "",
+    password: "",
+    confirmPassword: "",
+    condominiumId: "",
+  });
+  const [condominiums, setCondominiums] = useState([]);
+  const [loadingCondominiums, setLoadingCondominiums] = useState(true);
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const { isLoading, error } = useSelector((state) => state.auth)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isLoading, error } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    fetchCondominiums()
-  }, [])
+    fetchCondominiums();
+  }, []);
 
   const fetchCondominiums = async () => {
     try {
-      const response = await condominiumAPI.getAll()
-      setCondominiums(response.data?.data || [])
+      const response = await condominiumAPI.getAll();
+      setCondominiums(response.data?.data || []);
     } catch (error) {
-      console.error('Failed to fetch condominiums:', error)
-      toast.error('Failed to load condominiums')
+      console.error("Failed to fetch condominiums:", error);
+      toast.error("Failed to load condominiums");
     } finally {
-      setLoadingCondominiums(false)
+      setLoadingCondominiums(false);
     }
-  }
+  };
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-    })
-  }
+    });
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    
+    e.preventDefault();
+
     if (formData.password !== formData.confirmPassword) {
-      toast.error('Passwords do not match')
-      return
+      toast.error("Passwords do not match");
+      return;
     }
 
-    console.log('Submitting registration form:', formData)
+    console.log("Submitting registration form:", formData);
 
     try {
-      const result = await dispatch(registerUser(formData))
-      console.log('Registration result:', result)
-      
-      if (result.type === 'auth/register/fulfilled') {
-        toast.success('Registration successful! Please login.')
-        navigate('/login')
-      } else if (result.type === 'auth/register/rejected') {
-        console.error('Registration rejected:', result.payload)
-        toast.error(result.payload || 'Registration failed')
+      const result = await dispatch(registerUser(formData));
+      console.log("Registration result:", result);
+
+      if (result.type === "auth/register/fulfilled") {
+        toast.success("Registration successful! Please login.");
+        navigate("/login");
+      } else if (result.type === "auth/register/rejected") {
+        console.error("Registration rejected:", result.payload);
+        toast.error(result.payload || "Registration failed");
       }
     } catch (error) {
-      console.error('Registration error:', error)
-      toast.error('Registration failed')
+      console.error("Registration error:", error);
+      toast.error("Registration failed");
     }
-  }
+  };
 
   return (
     <div className="flex items-center justify-center py-8">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-2xl">
+      <div className="bg-white p-8 rounded-lg shadow-sm w-full max-w-2xl">
         <h2 className="text-2xl font-bold text-dark-blue mb-6 text-center">
           Register for RMS
         </h2>
-        
+
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
             {error}
@@ -279,19 +279,19 @@ const Register = () => {
             disabled={isLoading}
             className="w-full bg-medium-green hover:bg-teal text-white font-bold py-2 px-4 rounded-lg transition-colors disabled:opacity-50"
           >
-            {isLoading ? 'Registering...' : 'Register'}
+            {isLoading ? "Registering..." : "Register"}
           </button>
         </form>
 
         <p className="mt-4 text-center text-gray-600">
-          Already have an account?{' '}
+          Already have an account?{" "}
           <Link to="/login" className="text-medium-green hover:text-teal">
             Login here
           </Link>
         </p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;

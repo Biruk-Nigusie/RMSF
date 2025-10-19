@@ -273,7 +273,7 @@ const EkubEddir = () => {
 
       {/* Create Group Form */}
       {showCreateForm && (
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
           <h2 className="text-xl font-semibold text-teal mb-4">
             Create New Group
           </h2>
@@ -517,7 +517,7 @@ const EkubEddir = () => {
       {/* Groups Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {filteredGroups.map((group) => (
-          <div key={group.id} className="bg-white rounded-lg shadow-lg p-6">
+          <div key={group.id} className="bg-white rounded-lg shadow-sm p-6">
             <div className="flex justify-between items-start mb-4">
               <div className="flex items-center space-x-3">
                 <div className="bg-medium-green text-white rounded-full p-2">
@@ -758,7 +758,7 @@ const EkubEddir = () => {
 
       {filteredGroups.length === 0 && (
         <div className="text-center py-12">
-          <div className="bg-white rounded-lg shadow-lg p-8">
+          <div className="bg-white rounded-lg shadow-sm p-8">
             <h3 className="text-xl font-semibold text-gray-600 mb-4">
               No Groups Available
             </h3>

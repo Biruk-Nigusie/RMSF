@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom'
-import { ShieldX } from 'lucide-react'
+import { Link } from "react-router-dom";
+import { ShieldX } from "lucide-react";
 
 const Unauthorized = () => {
   return (
     <div className="min-h-screen bg-light-green flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg text-center max-w-md">
+      <div className="bg-white p-8 rounded-lg shadow-sm text-center max-w-md">
         <ShieldX className="mx-auto text-red-500 mb-4" size={64} />
         <h1 className="text-2xl font-bold text-dark-blue mb-4">
           Access Denied
@@ -20,7 +20,7 @@ const Unauthorized = () => {
         </Link>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Unauthorized
+export default Unauthorized;

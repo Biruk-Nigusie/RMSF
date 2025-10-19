@@ -203,20 +203,26 @@ const AdminParking = () => {
 
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
-        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
-          <h3 className="text-sm sm:text-lg font-semibold text-teal">Total Slots</h3>
+        <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
+          <h3 className="text-sm sm:text-lg font-semibold text-teal">
+            Total Slots
+          </h3>
           <p className="text-xl sm:text-2xl font-bold text-dark-blue">
             {parkingSlots.length}
           </p>
         </div>
-        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
-          <h3 className="text-sm sm:text-lg font-semibold text-teal">Occupied</h3>
+        <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
+          <h3 className="text-sm sm:text-lg font-semibold text-teal">
+            Occupied
+          </h3>
           <p className="text-xl sm:text-2xl font-bold text-red-600">
             {parkingSlots.filter((slot) => slot.isOccupied).length}
           </p>
         </div>
-        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
-          <h3 className="text-sm sm:text-lg font-semibold text-teal">Available</h3>
+        <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
+          <h3 className="text-sm sm:text-lg font-semibold text-teal">
+            Available
+          </h3>
           <p className="text-xl sm:text-2xl font-bold text-green-600">
             {
               parkingSlots.filter(
@@ -225,8 +231,10 @@ const AdminParking = () => {
             }
           </p>
         </div>
-        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
-          <h3 className="text-sm sm:text-lg font-semibold text-teal">Pending</h3>
+        <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
+          <h3 className="text-sm sm:text-lg font-semibold text-teal">
+            Pending
+          </h3>
           <p className="text-xl sm:text-2xl font-bold text-yellow-600">
             {parkingRequests.filter((req) => req.status === "PENDING").length}
           </p>
@@ -235,7 +243,7 @@ const AdminParking = () => {
 
       {/* Add Slots Form */}
       {showAddSlots && (
-        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-6 sm:mb-8">
+        <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 mb-6 sm:mb-8">
           <h2 className="text-lg sm:text-xl font-semibold text-teal mb-4">
             Create New Parking Area
           </h2>
@@ -311,7 +319,7 @@ const AdminParking = () => {
       )}
 
       {/* Parking Requests */}
-      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-6 sm:mb-8">
+      <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 mb-6 sm:mb-8">
         <h2 className="text-lg sm:text-xl font-semibold text-teal mb-4 sm:mb-6">
           Parking Requests
         </h2>
@@ -321,113 +329,123 @@ const AdminParking = () => {
             {/* Desktop Table */}
             <div className="hidden lg:block overflow-x-auto">
               <table className="min-w-full table-auto text-sm">
-              <thead className="bg-light-green">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-dark-blue uppercase tracking-wider">
-                    Resident
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-dark-blue uppercase tracking-wider">
-                    Slot Requested
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-dark-blue uppercase tracking-wider">
-                    Request Date
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-dark-blue uppercase tracking-wider">
-                    Status
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-dark-blue uppercase tracking-wider">
-                    Document
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-dark-blue uppercase tracking-wider">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {parkingRequests.map((request) => (
-                  <tr key={request.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="font-medium text-gray-900">
-                        {request.resident.fullName}
-                      </div>
-                      <div className="text-sm text-gray-500">
-                        Block {request.resident.block} -{" "}
-                        {request.resident.houseNo}
-                      </div>
-                      <div className="text-sm text-gray-500">
-                        {request.resident.phone}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="font-medium text-dark-blue">
-                        {request.slotNumber}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {new Date(request.requestDate).toLocaleDateString()}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span
-                        className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(
-                          request.status
-                        )}`}
-                      >
-                        {request.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {request.document ? (
-                        <button
-                          onClick={() => {
-                            setSelectedRequest(request);
-                            setShowDocument(true);
-                          }}
-                          className="text-blue-600 hover:text-blue-900 flex items-center space-x-1"
-                        >
-                          <FileText size={16} />
-                          <span>View Document</span>
-                        </button>
-                      ) : (
-                        <span className="text-gray-400 text-sm">
-                          No document
-                        </span>
-                      )}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      {request.status === "PENDING" && (
-                        <div className="flex space-x-2">
-                          <button
-                            onClick={() => handleApproveRequest(request)}
-                            className="text-green-600 hover:text-green-900"
-                            title="Approve request"
-                          >
-                            <CheckCircle size={16} />
-                          </button>
-                          <button
-                            onClick={() => handleRejectRequest(request)}
-                            className="text-red-600 hover:text-red-900"
-                            title="Reject request"
-                          >
-                            <XCircle size={16} />
-                          </button>
-                        </div>
-                      )}
-                    </td>
+                <thead className="bg-light-green">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-dark-blue uppercase tracking-wider">
+                      Resident
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-dark-blue uppercase tracking-wider">
+                      Slot Requested
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-dark-blue uppercase tracking-wider">
+                      Request Date
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-dark-blue uppercase tracking-wider">
+                      Status
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-dark-blue uppercase tracking-wider">
+                      Document
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-dark-blue uppercase tracking-wider">
+                      Actions
+                    </th>
                   </tr>
-                ))}
-              </tbody>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {parkingRequests.map((request) => (
+                    <tr key={request.id} className="hover:bg-gray-50">
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="font-medium text-gray-900">
+                          {request.resident.fullName}
+                        </div>
+                        <div className="text-sm text-gray-500">
+                          Block {request.resident.block} -{" "}
+                          {request.resident.houseNo}
+                        </div>
+                        <div className="text-sm text-gray-500">
+                          {request.resident.phone}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="font-medium text-dark-blue">
+                          {request.slotNumber}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {new Date(request.requestDate).toLocaleDateString()}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span
+                          className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(
+                            request.status
+                          )}`}
+                        >
+                          {request.status}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {request.document ? (
+                          <button
+                            onClick={() => {
+                              setSelectedRequest(request);
+                              setShowDocument(true);
+                            }}
+                            className="text-blue-600 hover:text-blue-900 flex items-center space-x-1"
+                          >
+                            <FileText size={16} />
+                            <span>View Document</span>
+                          </button>
+                        ) : (
+                          <span className="text-gray-400 text-sm">
+                            No document
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        {request.status === "PENDING" && (
+                          <div className="flex space-x-2">
+                            <button
+                              onClick={() => handleApproveRequest(request)}
+                              className="text-green-600 hover:text-green-900"
+                              title="Approve request"
+                            >
+                              <CheckCircle size={16} />
+                            </button>
+                            <button
+                              onClick={() => handleRejectRequest(request)}
+                              className="text-red-600 hover:text-red-900"
+                              title="Reject request"
+                            >
+                              <XCircle size={16} />
+                            </button>
+                          </div>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
               </table>
             </div>
 
             {/* Mobile Cards */}
             <div className="lg:hidden space-y-4">
               {parkingRequests.map((request) => (
-                <div key={request.id} className="bg-gray-50 rounded-lg p-4 border">
+                <div
+                  key={request.id}
+                  className="bg-gray-50 rounded-lg p-4 border"
+                >
                   <div className="flex justify-between items-start mb-3">
                     <div>
-                      <h3 className="font-medium text-gray-900">{request.resident.fullName}</h3>
-                      <p className="text-sm text-gray-500">Block {request.resident.block} - {request.resident.houseNo}</p>
-                      <p className="text-sm text-gray-500">{request.resident.phone}</p>
+                      <h3 className="font-medium text-gray-900">
+                        {request.resident.fullName}
+                      </h3>
+                      <p className="text-sm text-gray-500">
+                        Block {request.resident.block} -{" "}
+                        {request.resident.houseNo}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        {request.resident.phone}
+                      </p>
                     </div>
                     <div className="flex space-x-2">
                       {request.status === "PENDING" && (
@@ -457,11 +475,17 @@ const AdminParking = () => {
                     </div>
                     <div>
                       <span className="text-gray-600">Date:</span>
-                      <p className="font-medium">{new Date(request.requestDate).toLocaleDateString()}</p>
+                      <p className="font-medium">
+                        {new Date(request.requestDate).toLocaleDateString()}
+                      </p>
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-2 mb-3">
-                    <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(request.status)}`}>
+                    <span
+                      className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(
+                        request.status
+                      )}`}
+                    >
                       {request.status}
                     </span>
                     {request.document && (
@@ -489,8 +513,10 @@ const AdminParking = () => {
       </div>
 
       {/* Visual Parking Grid */}
-      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-6 sm:mb-8">
-        <h2 className="text-lg sm:text-xl font-semibold text-teal mb-4 sm:mb-6">Parking Layout</h2>
+      <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 mb-6 sm:mb-8">
+        <h2 className="text-lg sm:text-xl font-semibold text-teal mb-4 sm:mb-6">
+          Parking Layout
+        </h2>
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2 sm:gap-3 mb-4 sm:mb-6">
           {parkingSlots.map((slot) => (
             <div
@@ -500,7 +526,9 @@ const AdminParking = () => {
               )}`}
               onClick={() => handleSlotClick(slot)}
             >
-              <div className="text-lg sm:text-2xl mb-1">{getSlotIcon(slot)}</div>
+              <div className="text-lg sm:text-2xl mb-1">
+                {getSlotIcon(slot)}
+              </div>
               <div className="text-xs sm:text-sm font-bold text-dark-blue">
                 {slot.slotNumber}
               </div>

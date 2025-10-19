@@ -132,7 +132,7 @@ const Complaints = () => {
       </div>
 
       {showForm && (
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <div className="bg-white rounded-lg shadow-sms p-6 mb-8">
           <h2 className="text-xl font-semibold text-teal mb-4">
             {editingId ? 'Edit Complaint' : 'Submit New Complaint'}
           </h2>
@@ -223,7 +223,7 @@ const Complaints = () => {
       <div className="grid gap-6">
         {complaints.length > 0 ? (
           complaints.map((complaint) => (
-            <div key={complaint.id} className="bg-white rounded-lg shadow-lg p-6">
+            <div key={complaint.id} className="bg-white rounded-lg shadow-sm p-6">
               <div className="flex justify-between items-start mb-4">
                 <div>
                   <h3 className="text-xl font-semibold text-dark-blue mb-2">

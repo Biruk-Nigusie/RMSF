@@ -1,22 +1,22 @@
-import { useState, useEffect } from 'react'
-import { toast } from 'react-toastify'
-import { Plus, Edit, Trash2, Eye, Shield } from 'lucide-react'
+import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import { Plus, Edit, Trash2, Eye, Shield } from "lucide-react";
 
 const SuperAdminAdmins = () => {
-  const [admins, setAdmins] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [showForm, setShowForm] = useState(false)
+  const [admins, setAdmins] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    condominiumId: ''
-  })
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    condominiumId: "",
+  });
 
   useEffect(() => {
-    fetchAdmins()
-  }, [])
+    fetchAdmins();
+  }, []);
 
   const fetchAdmins = async () => {
     try {
@@ -24,70 +24,76 @@ const SuperAdminAdmins = () => {
       setAdmins([
         {
           id: 1,
-          firstName: 'John',
-          lastName: 'Smith',
-          email: 'john.admin@example.com',
-          phone: '+1234567890',
-          condominium: { name: 'Sunset Heights' },
-          status: 'ACTIVE',
-          createdAt: new Date().toISOString()
+          firstName: "John",
+          lastName: "Smith",
+          email: "john.admin@example.com",
+          phone: "+1234567890",
+          condominium: { name: "Sunset Heights" },
+          status: "ACTIVE",
+          createdAt: new Date().toISOString(),
         },
         {
           id: 2,
-          firstName: 'Sarah',
-          lastName: 'Johnson',
-          email: 'sarah.admin@example.com',
-          phone: '+1234567891',
-          condominium: { name: 'Ocean View' },
-          status: 'ACTIVE',
-          createdAt: new Date().toISOString()
-        }
-      ])
+          firstName: "Sarah",
+          lastName: "Johnson",
+          email: "sarah.admin@example.com",
+          phone: "+1234567891",
+          condominium: { name: "Ocean View" },
+          status: "ACTIVE",
+          createdAt: new Date().toISOString(),
+        },
+      ]);
     } catch (error) {
-      toast.error('Failed to fetch admins')
+      toast.error("Failed to fetch admins");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       // Mock API call
-      toast.success('Admin created successfully')
-      setShowForm(false)
-      setFormData({ firstName: '', lastName: '', email: '', phone: '', condominiumId: '' })
-      fetchAdmins()
+      toast.success("Admin created successfully");
+      setShowForm(false);
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        condominiumId: "",
+      });
+      fetchAdmins();
     } catch (error) {
-      toast.error('Failed to create admin')
+      toast.error("Failed to create admin");
     }
-  }
+  };
 
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this admin?')) {
+    if (window.confirm("Are you sure you want to delete this admin?")) {
       try {
         // Mock API call
-        toast.success('Admin deleted successfully')
-        fetchAdmins()
+        toast.success("Admin deleted successfully");
+        fetchAdmins();
       } catch (error) {
-        toast.error('Failed to delete admin')
+        toast.error("Failed to delete admin");
       }
     }
-  }
+  };
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
+      [e.target.name]: e.target.value,
+    });
+  };
 
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-medium-green"></div>
       </div>
-    )
+    );
   }
 
   return (
@@ -105,8 +111,10 @@ const SuperAdminAdmins = () => {
 
       {/* Create Form */}
       {showForm && (
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold text-teal mb-4">Create New Admin</h2>
+        <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
+          <h2 className="text-xl font-semibold text-teal mb-4">
+            Create New Admin
+          </h2>
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <div>
@@ -204,7 +212,7 @@ const SuperAdminAdmins = () => {
       )}
 
       {/* Admins Table */}
-      <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+      <div className="bg-white rounded-lg shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full table-auto">
             <thead className="bg-light-green">
@@ -252,11 +260,13 @@ const SuperAdminAdmins = () => {
                     {admin.condominium?.name}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                      admin.status === 'ACTIVE' 
-                        ? 'bg-green-100 text-green-800' 
-                        : 'bg-red-100 text-red-800'
-                    }`}>
+                    <span
+                      className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                        admin.status === "ACTIVE"
+                          ? "bg-green-100 text-green-800"
+                          : "bg-red-100 text-red-800"
+                      }`}
+                    >
                       {admin.status}
                     </span>
                   </td>
@@ -271,7 +281,7 @@ const SuperAdminAdmins = () => {
                       <button className="text-green-600 hover:text-green-900">
                         <Edit size={16} />
                       </button>
-                      <button 
+                      <button
                         onClick={() => handleDelete(admin.id)}
                         className="text-red-600 hover:text-red-900"
                       >
@@ -286,7 +296,7 @@ const SuperAdminAdmins = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SuperAdminAdmins
+export default SuperAdminAdmins;
