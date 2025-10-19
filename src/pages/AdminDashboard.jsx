@@ -72,7 +72,7 @@ const AdminDashboard = () => {
           <p className="text-gray-600 text-sm sm:text-base">Need attention</p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+        <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
           <div className="flex items-center justify-between mb-3 sm:mb-4">
             <h3 className="text-lg sm:text-xl font-semibold text-teal">Revenue</h3>
             <DollarSign className="text-medium-green" size={20} />

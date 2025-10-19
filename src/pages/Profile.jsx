@@ -225,7 +225,11 @@ const Profile = () => {
                     onUploadError={(error) => {
                       toast.error(`Upload failed: ${error.message}`);
                     }}
-                    className="ut-button:bg-medium-green ut-button:text-white ut-button:text-xs ut-button:px-2 ut-button:py-1"
+                    className="ut-button:bg-medium-green ut-button:text-white ut-button:text-xs ut-button:px-2 ut-button:py-1 ut-button:w-8 ut-button:h-8 ut-button:rounded-full ut-button:flex ut-button:items-center ut-button:justify-center ut-label:hidden ut-allowed-content:hidden"
+                    content={{
+                      button: <Camera size={16} className="text-white" />,
+                      allowedContent: ""
+                    }}
                   />
                 </div>
               )}
