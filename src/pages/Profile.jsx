@@ -36,6 +36,8 @@ const Profile = () => {
 
   useEffect(() => {
     const fetchProfile = async () => {
+      if (editing) return; // Don't fetch when editing
+      
       try {
         const response = await authAPI.getProfile();
         const profileUser = response.data;
@@ -73,7 +75,7 @@ const Profile = () => {
     };
     
     fetchProfile();
-  }, [user, dispatch]);
+  }, [user, dispatch, editing]);
 
   const handleInputChange = (e) => {
     setProfileData({
