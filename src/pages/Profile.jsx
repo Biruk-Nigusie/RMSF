@@ -170,20 +170,32 @@ const Profile = () => {
                   <UploadButton
                     endpoint="profileImage"
                     onClientUploadComplete={async (res) => {
+                      console.log('=== UPLOAD COMPLETE DEBUG ===');
+                      console.log('Upload response:', res);
+                      
                       const imageUrl = res[0].ufsUrl || res[0].url;
+                      console.log('Image URL:', imageUrl);
+                      
                       setImagePreview(imageUrl);
                       setProfileData(prev => ({ ...prev, profileImageUrl: imageUrl }));
                       
                       // Save image URL to database immediately
                       try {
+                        console.log('Sending profile update with data:', { profileImage: imageUrl });
                         const response = await authAPI.updateProfile({ profileImage: imageUrl });
+                        console.log('Profile update response:', response);
                         dispatch(updateUser(response.data));
                         toast.success("Profile image updated successfully!");
                       } catch (error) {
-                        console.error('Failed to save profile image:', error);
+                        console.error('=== PROFILE UPDATE ERROR ===');
+                        console.error('Error object:', error);
+                        console.error('Error response:', error.response);
+                        console.error('Error data:', error.response?.data);
+                        console.error('Error status:', error.response?.status);
+                        console.error('=== ERROR END ===');
                         toast.error('Failed to save profile image');
                       }
-                    }}
+                    }
                     onUploadError={(error) => {
                       toast.error(`Upload failed: ${error.message}`);
                     }}
