@@ -9,20 +9,7 @@ const Navbar = ({ sidebarOpen, toggleSidebar }) => {
   const { isAuthenticated, user } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    const refreshUserData = async () => {
-      if (isAuthenticated) {
-        try {
-          const response = await authAPI.getProfile()
-          dispatch(updateUser(response.data))
-        } catch (error) {
-          console.error('Failed to refresh user data:', error)
-        }
-      }
-    }
-    
-    refreshUserData()
-  }, [isAuthenticated, dispatch])
+
 
   const handleLogout = () => {
     dispatch(logout())
