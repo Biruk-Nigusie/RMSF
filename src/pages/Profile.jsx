@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { authAPI } from "../services/api";
 import { updateUser } from "../store/authSlice";
 import { toast } from "react-toastify";
+import { useDropzone } from "react-dropzone";
 import {
   User,
   Edit,
@@ -13,6 +14,7 @@ import {
   Mail,
   Home,
   Users,
+  Upload,
 } from "lucide-react";
 import { UploadButton } from "../utils/uploadthing";
 
@@ -178,60 +180,34 @@ const Profile = () => {
                 )}
               </div>
               {editing && (
-                <div className="absolute -bottom-2 -right-2">
-                  <UploadButton
-                    endpoint="profileImage"
-                    onClientUploadComplete={async (res) => {
-                      console.log("=== UPLOAD COMPLETE DEBUG ===");
-                      console.log("Upload response:", res);
+                <ImageDropzone
+                  onImageUpload={async (imageUrl) => {
+                    setImagePreview(imageUrl);
+                    setProfileData((prev) => ({
+                      ...prev,
+                      profileImageUrl: imageUrl,
+                    }));
 
-                      const imageUrl = res[0].ufsUrl || res[0].url;
-                      console.log("Image URL:", imageUrl);
+                    // Save image URL to database immediately
+                    try {
+                      const response = await authAPI.updateProfile({
+                        profileImage: imageUrl,
+                      });
+                      
+                      // Update Redux store with new profile image
+                      const updatedUser = {
+                        ...response.data,
+                        profileImage: imageUrl,
+                      };
+                      dispatch(updateUser(updatedUser));
 
-                      setImagePreview(imageUrl);
-                      setProfileData((prev) => ({
-                        ...prev,
-                        profileImageUrl: imageUrl,
-                      }));
-
-                      // Save image URL to database immediately
-                      try {
-                        console.log("Sending profile update with data:", {
-                          profileImage: imageUrl,
-                        });
-                        const response = await authAPI.updateProfile({
-                          profileImage: imageUrl,
-                        });
-                        console.log("Profile update response:", response);
-
-                        // Update Redux store with new profile image
-                        const updatedUser = {
-                          ...response.data,
-                          profileImage: imageUrl,
-                        };
-                        dispatch(updateUser(updatedUser));
-
-                        toast.success("Profile image updated successfully!");
-                      } catch (error) {
-                        console.error("=== PROFILE UPDATE ERROR ===");
-                        console.error("Error object:", error);
-                        console.error("Error response:", error.response);
-                        console.error("Error data:", error.response?.data);
-                        console.error("Error status:", error.response?.status);
-                        console.error("=== ERROR END ===");
-                        toast.error("Failed to save profile image");
-                      }
-                    }}
-                    onUploadError={(error) => {
-                      toast.error(`Upload failed: ${error.message}`);
-                    }}
-                    className="ut-button:bg-medium-green ut-button:text-white ut-button:text-xs ut-button:px-2 ut-button:py-1 ut-button:w-8 ut-button:h-8 ut-button:rounded-full ut-button:flex ut-button:items-center ut-button:justify-center ut-label:hidden ut-allowed-content:hidden"
-                    content={{
-                      button: <Camera size={16} className="text-white" />,
-                      allowedContent: ""
-                    }}
-                  />
-                </div>
+                      toast.success("Profile image updated successfully!");
+                    } catch (error) {
+                      console.error("Profile update error:", error);
+                      toast.error("Failed to save profile image");
+                    }
+                  }}
+                />
               )}
             </div>
             <div>
@@ -426,6 +402,51 @@ const Profile = () => {
             </>
           )}
         </div>
+      </div>
+    </div>
+  );
+};
+
+// Image Dropzone Component
+const ImageDropzone = ({ onImageUpload }) => {
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    accept: {
+      'image/*': ['.jpeg', '.jpg', '.png', '.gif']
+    },
+    maxFiles: 1,
+    multiple: false,
+    noClick: true
+  });
+
+  return (
+    <div className="absolute -bottom-2 -right-2">
+      <div
+        {...getRootProps()}
+        className={`relative w-8 h-8 rounded-full transition-colors ${
+          isDragActive ? 'bg-teal' : ''
+        }`}
+      >
+        <input {...getInputProps()} />
+        <UploadButton
+          endpoint="profileImage"
+          onClientUploadComplete={async (res) => {
+            const imageUrl = res[0].ufsUrl || res[0].url;
+            onImageUpload(imageUrl);
+          }}
+          onUploadError={(error) => {
+            toast.error(`Upload failed: ${error.message}`);
+          }}
+          className="ut-button:bg-medium-green ut-button:text-white ut-button:text-xs ut-button:px-2 ut-button:py-1 ut-button:w-8 ut-button:h-8 ut-button:rounded-full ut-button:flex ut-button:items-center ut-button:justify-center ut-label:hidden ut-allowed-content:hidden"
+          content={{
+            button: <Camera size={16} className="text-white" />,
+            allowedContent: ""
+          }}
+        />
+        {isDragActive && (
+          <div className="absolute inset-0 bg-teal bg-opacity-50 rounded-full flex items-center justify-center">
+            <Upload size={16} className="text-white" />
+          </div>
+        )}
       </div>
     </div>
   );
