@@ -169,11 +169,20 @@ const Profile = () => {
                 <div className="absolute -bottom-2 -right-2">
                   <UploadButton
                     endpoint="profileImage"
-                    onClientUploadComplete={(res) => {
+                    onClientUploadComplete={async (res) => {
                       const imageUrl = res[0].ufsUrl || res[0].url;
                       setImagePreview(imageUrl);
                       setProfileData(prev => ({ ...prev, profileImageUrl: imageUrl }));
-                      toast.success("Image uploaded successfully!");
+                      
+                      // Save image URL to database immediately
+                      try {
+                        const response = await authAPI.updateProfile({ profileImage: imageUrl });
+                        dispatch(updateUser(response.data));
+                        toast.success("Profile image updated successfully!");
+                      } catch (error) {
+                        console.error('Failed to save profile image:', error);
+                        toast.error('Failed to save profile image');
+                      }
                     }}
                     onUploadError={(error) => {
                       toast.error(`Upload failed: ${error.message}`);
