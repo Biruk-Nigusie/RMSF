@@ -1,9 +1,8 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { authAPI } from "../services/api";
 import { updateUser } from "../store/authSlice";
 import { toast } from "react-toastify";
-import { useDropzone } from "react-dropzone";
 import {
   User,
   Edit,
@@ -168,7 +167,34 @@ const Profile = () => {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             <div className="relative">
-              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+              <div 
+                className={`w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden transition-all ${
+                  editing ? 'border-2 border-dashed border-medium-green hover:border-teal cursor-pointer' : ''
+                }`}
+                onDragOver={(e) => {
+                  if (editing) {
+                    e.preventDefault();
+                    e.currentTarget.classList.add('border-teal', 'bg-light-green');
+                  }
+                }}
+                onDragLeave={(e) => {
+                  if (editing) {
+                    e.currentTarget.classList.remove('border-teal', 'bg-light-green');
+                  }
+                }}
+                onDrop={(e) => {
+                  if (editing) {
+                    e.preventDefault();
+                    e.currentTarget.classList.remove('border-teal', 'bg-light-green');
+                    const files = e.dataTransfer.files;
+                    if (files[0] && files[0].type.startsWith('image/')) {
+                      const file = files[0];
+                      setImagePreview(URL.createObjectURL(file));
+                      toast.info('Image ready for upload. Click save to update.');
+                    }
+                  }
+                }}
+              >
                 {imagePreview ? (
                   <img
                     src={imagePreview}
@@ -178,36 +204,53 @@ const Profile = () => {
                 ) : (
                   <User size={32} className="text-gray-400" />
                 )}
+                {editing && (
+                  <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-20 rounded-full flex items-center justify-center transition-all">
+                    <Upload size={20} className="text-white opacity-0 hover:opacity-100 transition-opacity" />
+                  </div>
+                )}
               </div>
               {editing && (
-                <ImageDropzone
-                  onImageUpload={async (imageUrl) => {
-                    setImagePreview(imageUrl);
-                    setProfileData((prev) => ({
-                      ...prev,
-                      profileImageUrl: imageUrl,
-                    }));
+                <div className="absolute -bottom-2 -right-2">
+                  <UploadButton
+                    endpoint="profileImage"
+                    onClientUploadComplete={async (res) => {
+                      const imageUrl = res[0].ufsUrl || res[0].url;
+                      setImagePreview(imageUrl);
+                      setProfileData((prev) => ({
+                        ...prev,
+                        profileImageUrl: imageUrl,
+                      }));
 
-                    // Save image URL to database immediately
-                    try {
-                      const response = await authAPI.updateProfile({
-                        profileImage: imageUrl,
-                      });
-                      
-                      // Update Redux store with new profile image
-                      const updatedUser = {
-                        ...response.data,
-                        profileImage: imageUrl,
-                      };
-                      dispatch(updateUser(updatedUser));
+                      // Save image URL to database immediately
+                      try {
+                        const response = await authAPI.updateProfile({
+                          profileImage: imageUrl,
+                        });
+                        
+                        // Update Redux store with new profile image
+                        const updatedUser = {
+                          ...response.data,
+                          profileImage: imageUrl,
+                        };
+                        dispatch(updateUser(updatedUser));
 
-                      toast.success("Profile image updated successfully!");
-                    } catch (error) {
-                      console.error("Profile update error:", error);
-                      toast.error("Failed to save profile image");
-                    }
-                  }}
-                />
+                        toast.success("Profile image updated successfully!");
+                      } catch (error) {
+                        console.error("Profile update error:", error);
+                        toast.error("Failed to save profile image");
+                      }
+                    }}
+                    onUploadError={(error) => {
+                      toast.error(`Upload failed: ${error.message}`);
+                    }}
+                    className="ut-button:bg-medium-green ut-button:text-white ut-button:text-xs ut-button:px-2 ut-button:py-1 ut-button:w-8 ut-button:h-8 ut-button:rounded-full ut-button:flex ut-button:items-center ut-button:justify-center ut-label:hidden ut-allowed-content:hidden"
+                    content={{
+                      button: <Camera size={16} className="text-white" />,
+                      allowedContent: ""
+                    }}
+                  />
+                </div>
               )}
             </div>
             <div>
@@ -407,49 +450,6 @@ const Profile = () => {
   );
 };
 
-// Image Dropzone Component
-const ImageDropzone = ({ onImageUpload }) => {
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    accept: {
-      'image/*': ['.jpeg', '.jpg', '.png', '.gif']
-    },
-    maxFiles: 1,
-    multiple: false,
-    noClick: true
-  });
 
-  return (
-    <div className="absolute -bottom-2 -right-2">
-      <div
-        {...getRootProps()}
-        className={`relative w-8 h-8 rounded-full transition-colors ${
-          isDragActive ? 'bg-teal' : ''
-        }`}
-      >
-        <input {...getInputProps()} />
-        <UploadButton
-          endpoint="profileImage"
-          onClientUploadComplete={async (res) => {
-            const imageUrl = res[0].ufsUrl || res[0].url;
-            onImageUpload(imageUrl);
-          }}
-          onUploadError={(error) => {
-            toast.error(`Upload failed: ${error.message}`);
-          }}
-          className="ut-button:bg-medium-green ut-button:text-white ut-button:text-xs ut-button:px-2 ut-button:py-1 ut-button:w-8 ut-button:h-8 ut-button:rounded-full ut-button:flex ut-button:items-center ut-button:justify-center ut-label:hidden ut-allowed-content:hidden"
-          content={{
-            button: <Camera size={16} className="text-white" />,
-            allowedContent: ""
-          }}
-        />
-        {isDragActive && (
-          <div className="absolute inset-0 bg-teal bg-opacity-50 rounded-full flex items-center justify-center">
-            <Upload size={16} className="text-white" />
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
 
 export default Profile;
