@@ -1,4 +1,21 @@
+import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+
 const Home = () => {
+  const { isAuthenticated, user } = useSelector((state) => state.auth)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      if (user?.type === 'admin') {
+        navigate('/admin-dashboard')
+      } else {
+        navigate('/dashboard')
+      }
+    }
+  }, [isAuthenticated, user, navigate])
+
   return (
     <div className="text-center">
       <h1 className="text-4xl font-bold text-dark-blue mb-8">

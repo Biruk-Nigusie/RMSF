@@ -36,7 +36,7 @@ const Navbar = ({ sidebarOpen, toggleSidebar }) => {
           <div className="flex items-center space-x-3 sm:space-x-6">
             {isAuthenticated ? (
               <>
-                <div className="hidden sm:flex items-center space-x-2">
+                <Link to="/profile" className="hidden sm:flex items-center space-x-2 hover:text-medium-green transition-colors">
                   <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
                     {user?.profileImage ? (
                       <img src={user.profileImage} alt="Profile" className="w-full h-full object-cover" />
@@ -45,8 +45,8 @@ const Navbar = ({ sidebarOpen, toggleSidebar }) => {
                     )}
                   </div>
                   <span className="text-sm">{user?.fullName || user?.name || 'Profile'}</span>
-                </div>
-                <div className="sm:hidden">
+                </Link>
+                <Link to="/profile" className="sm:hidden hover:text-medium-green transition-colors">
                   <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
                     {user?.profileImage ? (
                       <img src={user.profileImage} alt="Profile" className="w-full h-full object-cover" />
@@ -54,7 +54,7 @@ const Navbar = ({ sidebarOpen, toggleSidebar }) => {
                       <User size={16} className="text-gray-400" />
                     )}
                   </div>
-                </div>
+                </Link>
                 
                 <button
                   onClick={handleLogout}
