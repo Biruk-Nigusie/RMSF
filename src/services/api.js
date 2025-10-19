@@ -60,14 +60,7 @@ export const authAPI = {
     return api.post("/auth/register", payload);
   },
   getProfile: () => api.get("/auth/profile"),
-  updateProfile: (data) => {
-    const config = {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    };
-    return api.put("/auth/profile", data, config);
-  },
+  updateProfile: (data) => api.put("/auth/profile", data),
 };
 
 export const residentsAPI = {

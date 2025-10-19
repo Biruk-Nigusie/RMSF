@@ -14,6 +14,7 @@ import {
   Home,
   Users,
 } from "lucide-react";
+import { UploadButton } from "../utils/uploadthing";
 
 const Profile = () => {
   const { user } = useSelector((state) => state.auth);
@@ -29,27 +30,45 @@ const Profile = () => {
     familyMembers: "",
     carPlate: "",
     profileImage: null,
+    profileImageUrl: null,
   });
   const [imagePreview, setImagePreview] = useState(null);
 
   useEffect(() => {
-    if (user) {
-      setProfileData({
-        fullName: user.fullName || "",
-        email: user.email || "",
-        phone: user.phone || "",
-        block: user.block || "",
-        houseNo: user.houseNo || "",
-        familyMembers: user.familyMembers || "",
-        carPlate: user.carPlate || "",
-        profileImage: null,
-      });
-      setImagePreview(
-        user.profileImage
-          ? `http:localhost:3000/uploads/profiles/${user.profileImage}`
-          : null
-      );
-    }
+    const fetchProfile = async () => {
+      try {
+        const response = await authAPI.getProfile();
+        const profileUser = response.data;
+        setProfileData({
+          fullName: profileUser.fullName || "",
+          email: profileUser.email || "",
+          phone: profileUser.phone || "",
+          block: profileUser.block || "",
+          houseNo: profileUser.houseNo || "",
+          familyMembers: profileUser.familyMembers || "",
+          carPlate: profileUser.carPlate || "",
+          profileImage: null,
+          profileImageUrl: profileUser.profileImage || null,
+        });
+        setImagePreview(profileUser.profileImage || null);
+      } catch (error) {
+        console.error('Failed to fetch profile:', error);
+        if (user) {
+          setProfileData({
+            fullName: user.fullName || "",
+            email: user.email || "",
+            phone: user.phone || "",
+            block: user.block || "",
+            houseNo: user.houseNo || "",
+            familyMembers: user.familyMembers || "",
+            carPlate: user.carPlate || "",
+            profileImage: null,
+          });
+        }
+      }
+    };
+    
+    fetchProfile();
   }, [user]);
 
   const handleInputChange = (e) => {
@@ -73,20 +92,21 @@ const Profile = () => {
   const handleSave = async () => {
     setLoading(true);
     try {
-      const formData = new FormData();
-      formData.append("fullName", profileData.fullName);
-      formData.append("email", profileData.email);
-      formData.append("phone", profileData.phone);
-      formData.append("block", profileData.block);
-      formData.append("houseNo", profileData.houseNo);
-      formData.append("familyMembers", profileData.familyMembers);
-      formData.append("carPlate", profileData.carPlate);
+      const updateData = {
+        fullName: profileData.fullName,
+        email: profileData.email,
+        phone: profileData.phone,
+        block: profileData.block,
+        houseNo: profileData.houseNo,
+        familyMembers: profileData.familyMembers,
+        carPlate: profileData.carPlate,
+      };
 
-      if (profileData.profileImage) {
-        formData.append("profileImage", profileData.profileImage);
+      if (profileData.profileImageUrl) {
+        updateData.profileImage = profileData.profileImageUrl;
       }
 
-      const response = await authAPI.updateProfile(formData);
+      const response = await authAPI.updateProfile(updateData);
       dispatch(updateUser(response.data));
       toast.success("Profile updated successfully!");
       setEditing(false);
@@ -145,15 +165,20 @@ const Profile = () => {
                 )}
               </div>
               {editing && (
-                <label className="absolute bottom-0 right-0 bg-medium-green text-white rounded-full p-1 cursor-pointer hover:bg-teal">
-                  <Camera size={16} />
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    className="hidden"
+                <div className="absolute -bottom-2 -right-2">
+                  <UploadButton
+                    endpoint="profileImage"
+                    onClientUploadComplete={(res) => {
+                      setImagePreview(res[0].url);
+                      setProfileData(prev => ({ ...prev, profileImageUrl: res[0].url }));
+                      toast.success("Image uploaded successfully!");
+                    }}
+                    onUploadError={(error) => {
+                      toast.error(`Upload failed: ${error.message}`);
+                    }}
+                    className="ut-button:bg-medium-green ut-button:text-white ut-button:text-xs ut-button:px-2 ut-button:py-1"
                   />
-                </label>
+                </div>
               )}
             </div>
             <div>
