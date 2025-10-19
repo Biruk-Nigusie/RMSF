@@ -195,7 +195,7 @@ const Profile = () => {
                         console.error('=== ERROR END ===');
                         toast.error('Failed to save profile image');
                       }
-                    }
+                    }}
                     onUploadError={(error) => {
                       toast.error(`Upload failed: ${error.message}`);
                     }}
