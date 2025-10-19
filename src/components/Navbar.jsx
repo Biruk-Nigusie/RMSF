@@ -1,19 +1,17 @@
-import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import { logout, updateUser } from '../store/authSlice'
-import { authAPI } from '../services/api'
-import { LogOut, User, Menu, X } from 'lucide-react'
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout, updateUser } from "../store/authSlice";
+import { authAPI } from "../services/api";
+import { LogOut, User, Menu, X } from "lucide-react";
 
 const Navbar = ({ sidebarOpen, toggleSidebar }) => {
-  const { isAuthenticated, user } = useSelector((state) => state.auth)
-  const dispatch = useDispatch()
-
-
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
-    dispatch(logout())
-  }
+    dispatch(logout());
+  };
 
   return (
     <nav className="bg-dark-blue text-white shadow-sm">
@@ -28,34 +26,47 @@ const Navbar = ({ sidebarOpen, toggleSidebar }) => {
                 {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
               </button>
             )}
-            <Link to="/" className="text-xl font-bold">
-              RMS
-            </Link>
           </div>
-          
+
           <div className="flex items-center space-x-3 sm:space-x-6">
             {isAuthenticated ? (
               <>
-                <Link to="/profile" className="hidden sm:flex items-center space-x-2 hover:text-medium-green transition-colors">
+                <Link
+                  to="/profile"
+                  className="hidden sm:flex items-center space-x-2 hover:text-medium-green transition-colors"
+                >
                   <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
                     {user?.profileImage ? (
-                      <img src={user.profileImage} alt="Profile" className="w-full h-full object-cover" />
+                      <img
+                        src={user.profileImage}
+                        alt="Profile"
+                        className="w-full h-full object-cover"
+                      />
                     ) : (
                       <User size={16} className="text-gray-400" />
                     )}
                   </div>
-                  <span className="text-sm">{user?.fullName || user?.name || 'Profile'}</span>
+                  <span className="text-sm">
+                    {user?.fullName || user?.name || "Profile"}
+                  </span>
                 </Link>
-                <Link to="/profile" className="sm:hidden hover:text-medium-green transition-colors">
+                <Link
+                  to="/profile"
+                  className="sm:hidden hover:text-medium-green transition-colors"
+                >
                   <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
                     {user?.profileImage ? (
-                      <img src={user.profileImage} alt="Profile" className="w-full h-full object-cover" />
+                      <img
+                        src={user.profileImage}
+                        alt="Profile"
+                        className="w-full h-full object-cover"
+                      />
                     ) : (
                       <User size={16} className="text-gray-400" />
                     )}
                   </div>
                 </Link>
-                
+
                 <button
                   onClick={handleLogout}
                   className="flex items-center space-x-1 hover:text-medium-green transition-colors"
@@ -65,7 +76,10 @@ const Navbar = ({ sidebarOpen, toggleSidebar }) => {
                 </button>
               </>
             ) : (
-              <Link to="/login" className="bg-medium-green hover:bg-teal px-3 sm:px-4 py-2 rounded transition-colors text-sm sm:text-base">
+              <Link
+                to="/login"
+                className="bg-medium-green hover:bg-teal px-3 sm:px-4 py-2 rounded transition-colors text-sm sm:text-base"
+              >
                 Login
               </Link>
             )}
@@ -73,7 +87,7 @@ const Navbar = ({ sidebarOpen, toggleSidebar }) => {
         </div>
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
