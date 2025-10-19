@@ -34,11 +34,23 @@ const Navbar = ({ sidebarOpen, toggleSidebar }) => {
             {isAuthenticated ? (
               <>
                 <div className="hidden sm:flex items-center space-x-2">
-                  <User size={20} />
+                  <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+                    {user?.profileImage ? (
+                      <img src={user.profileImage} alt="Profile" className="w-full h-full object-cover" />
+                    ) : (
+                      <User size={16} className="text-gray-400" />
+                    )}
+                  </div>
                   <span className="text-sm">{user?.fullName || user?.name || 'Profile'}</span>
                 </div>
                 <div className="sm:hidden">
-                  <User size={20} />
+                  <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+                    {user?.profileImage ? (
+                      <img src={user.profileImage} alt="Profile" className="w-full h-full object-cover" />
+                    ) : (
+                      <User size={16} className="text-gray-400" />
+                    )}
+                  </div>
                 </div>
                 
                 <button

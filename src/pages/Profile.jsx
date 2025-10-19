@@ -107,7 +107,8 @@ const Profile = () => {
       }
 
       const response = await authAPI.updateProfile(updateData);
-      dispatch(updateUser(response.data));
+      const updatedUser = { ...response.data, profileImage: updateData.profileImage || response.data.profileImage };
+      dispatch(updateUser(updatedUser));
       toast.success("Profile updated successfully!");
       setEditing(false);
     } catch (error) {
@@ -169,8 +170,9 @@ const Profile = () => {
                   <UploadButton
                     endpoint="profileImage"
                     onClientUploadComplete={(res) => {
-                      setImagePreview(res[0].url);
-                      setProfileData(prev => ({ ...prev, profileImageUrl: res[0].url }));
+                      const imageUrl = res[0].ufsUrl || res[0].url;
+                      setImagePreview(imageUrl);
+                      setProfileData(prev => ({ ...prev, profileImageUrl: imageUrl }));
                       toast.success("Image uploaded successfully!");
                     }}
                     onUploadError={(error) => {
