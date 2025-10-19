@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_BASE_URL = "https://rmsb-2wjb.onrender.com/api";
 
-console.log('API Base URL:', API_BASE_URL);
+console.log("API Base URL:", API_BASE_URL);
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -60,7 +60,14 @@ export const authAPI = {
     return api.post("/auth/register", payload);
   },
   getProfile: () => api.get("/auth/profile"),
-  updateProfile: (data) => api.put("/auth/profile", data),
+  updateProfile: (data) => {
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    };
+    return api.put("/auth/profile", data, config);
+  },
 };
 
 export const residentsAPI = {

@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
-import { Home, MessageSquare, Car, Zap, AlertCircle, Users, FileText } from 'lucide-react'
+import { Home, MessageSquare, Car, Zap, AlertCircle, Users, FileText, User } from 'lucide-react'
 
 const ResidentSidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const location = useLocation()
@@ -12,6 +12,7 @@ const ResidentSidebar = ({ sidebarOpen, setSidebarOpen }) => {
     { path: '/utilities', icon: Zap, label: 'Utilities' },
     { path: '/ekub-eddir', icon: Users, label: 'Ekub/Eddir' },
     { path: '/services', icon: MessageSquare, label: 'Services' },
+    { path: '/profile', icon: User, label: 'Profile' },
   ]
 
   const handleLinkClick = () => {

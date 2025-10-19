@@ -21,6 +21,7 @@ import Parking from './pages/Parking'
 import Utilities from './pages/Utilities'
 import Services from './pages/Services'
 import EkubEddir from './pages/EkubEddir'
+import Profile from './pages/Profile'
 
 // Admin Pages
 import AdminDashboard from './pages/AdminDashboard'
@@ -62,6 +63,7 @@ function App() {
               <Route path="utilities" element={<Utilities />} />
               <Route path="services" element={<Services />} />
               <Route path="ekub-eddir" element={<EkubEddir />} />
+              <Route path="profile" element={<Profile />} />
 
               {/* Admin Routes */}
               <Route path="admin-dashboard" element={
