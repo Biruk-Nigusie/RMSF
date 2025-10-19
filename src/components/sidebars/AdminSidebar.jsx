@@ -22,7 +22,7 @@ const AdminSidebar = ({ sidebarOpen, setSidebarOpen }) => {
   }
 
   return (
-    <div className="w-64 bg-white shadow-lg h-screen overflow-y-auto">
+    <div className="w-64 bg-white shadow-sm h-screen overflow-y-auto">
       <div className="p-4">
         <h2 className="text-lg font-semibold text-dark-blue">Admin Portal</h2>
       </div>
