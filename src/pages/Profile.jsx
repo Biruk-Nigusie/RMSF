@@ -107,7 +107,10 @@ const Profile = () => {
       }
 
       const response = await authAPI.updateProfile(updateData);
-      const updatedUser = { ...response.data, profileImage: updateData.profileImage || response.data.profileImage };
+      const updatedUser = { 
+        ...response.data, 
+        profileImage: updateData.profileImage || response.data.profileImage || user.profileImage 
+      };
       dispatch(updateUser(updatedUser));
       toast.success("Profile updated successfully!");
       setEditing(false);
@@ -184,7 +187,11 @@ const Profile = () => {
                         console.log('Sending profile update with data:', { profileImage: imageUrl });
                         const response = await authAPI.updateProfile({ profileImage: imageUrl });
                         console.log('Profile update response:', response);
-                        dispatch(updateUser(response.data));
+                        
+                        // Update Redux store with new profile image
+                        const updatedUser = { ...response.data, profileImage: imageUrl };
+                        dispatch(updateUser(updatedUser));
+                        
                         toast.success("Profile image updated successfully!");
                       } catch (error) {
                         console.error('=== PROFILE UPDATE ERROR ===');
