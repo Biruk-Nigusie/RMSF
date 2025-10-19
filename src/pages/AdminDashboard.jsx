@@ -84,7 +84,7 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+      <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
         <h3 className="text-lg sm:text-xl font-semibold text-teal mb-4">Recent Complaints</h3>
         <div className="space-y-3">
           {dashboardData?.recentComplaints?.length > 0 ? (
