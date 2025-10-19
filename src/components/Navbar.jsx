@@ -1,12 +1,28 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { logout } from '../store/authSlice'
+import { logout, updateUser } from '../store/authSlice'
+import { authAPI } from '../services/api'
 import { LogOut, User, Menu, X } from 'lucide-react'
 
 const Navbar = ({ sidebarOpen, toggleSidebar }) => {
   const { isAuthenticated, user } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    const refreshUserData = async () => {
+      if (isAuthenticated) {
+        try {
+          const response = await authAPI.getProfile()
+          dispatch(updateUser(response.data))
+        } catch (error) {
+          console.error('Failed to refresh user data:', error)
+        }
+      }
+    }
+    
+    refreshUserData()
+  }, [isAuthenticated, dispatch])
 
   const handleLogout = () => {
     dispatch(logout())

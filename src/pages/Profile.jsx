@@ -39,6 +39,10 @@ const Profile = () => {
       try {
         const response = await authAPI.getProfile();
         const profileUser = response.data;
+        
+        // Update Redux store with fresh data from API
+        dispatch(updateUser(profileUser));
+        
         setProfileData({
           fullName: profileUser.fullName || "",
           email: profileUser.email || "",
@@ -69,7 +73,7 @@ const Profile = () => {
     };
     
     fetchProfile();
-  }, [user]);
+  }, [user, dispatch]);
 
   const handleInputChange = (e) => {
     setProfileData({
