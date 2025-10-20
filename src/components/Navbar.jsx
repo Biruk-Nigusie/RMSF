@@ -78,9 +78,10 @@ const Navbar = ({ sidebarOpen, toggleSidebar }) => {
             ) : (
               <Link
                 to="/login"
-                className="bg-medium-green hover:bg-teal px-3 sm:px-4 py-2 rounded transition-colors text-sm sm:text-base"
+                className="bg-blue-900 hover:bg-teal px-3 sm:px-8 py-2 rounded transition-colors text-sm sm:text-base"
+                style={{ color: "white" }}
               >
-                Login
+                <strong>Login</strong>
               </Link>
             )}
           </div>
