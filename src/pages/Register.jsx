@@ -112,7 +112,7 @@ const Register = () => {
 
       {/* Right side - Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center relative z-10 px-6 lg:px-0">
-        <div className="bg-white lg:bg-white/90 dark:bg-gray-800 lg:dark:bg-gray-800/90 lg:backdrop-blur-sm p-6 lg:p-14 rounded-lg shadow-sm w-full max-w-lg lg:max-w-2xl">
+        <div className="bg-white lg:bg-white/90 lg:backdrop-blur-sm p-6 lg:p-14 rounded-lg shadow-sm w-full max-w-lg lg:max-w-2xl">
           <h2 className="text-2xl font-bold text-dark-blue mb-16 text-center">
             Register for RMS
           </h2>
@@ -311,7 +311,7 @@ const Register = () => {
               type="submit"
               disabled={isLoading}
               className="bg-blue-900 w-full bg-medium-green hover:bg-teal text-white font-bold py-2 px-4 rounded-lg transition-colors disabled:opacity-50 mt-5"
-            style={{color:"white",cursor:"pointer"}}
+              style={{ color: "white", cursor: "pointer" }}
             >
               {isLoading ? "Registering..." : "Register"}
             </button>
