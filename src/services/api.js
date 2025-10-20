@@ -176,6 +176,9 @@ export const ekubEddirAPI = {
 
 export const condominiumAPI = {
   getAll: () => api.get("/condominiums"),
+  create: (data) => api.post("/condominiums", data),
+  update: (id, data) => api.put(`/condominiums/${id}`, data),
+  delete: (id) => api.delete(`/condominiums/${id}`),
 };
 
 export default api;

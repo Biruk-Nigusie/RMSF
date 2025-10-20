@@ -4,7 +4,6 @@ import { useNavigate, Link } from "react-router-dom";
 import { registerUser } from "../store/authSlice";
 import { condominiumAPI } from "../services/api";
 import { toast } from "react-toastify";
-import signupImage from "../assets/signup.svg";
 import bgImage from "../assets/bg.jpg";
 
 const Register = () => {
@@ -112,7 +111,7 @@ const Register = () => {
 
       {/* Right side - Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center relative z-10 px-6 lg:px-0">
-        <div className="bg-white lg:bg-white/90 lg:backdrop-blur-sm p-6 lg:p-14 rounded-lg shadow-sm w-full max-w-lg lg:max-w-2xl">
+        <div className="bg-white   p-6 lg:p-14 rounded-lg shadow-sm w-full max-w-lg lg:max-w-2xl">
           <h2 className="text-2xl font-bold text-dark-blue mb-16 text-center">
             Register for RMS
           </h2>

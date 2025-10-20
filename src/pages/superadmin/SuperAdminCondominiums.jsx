@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import { condominiumAPI } from "../../services/api";
 import { Plus, Edit, Trash2, Eye, Building, Users, MapPin } from "lucide-react";
 
 const SuperAdminCondominiums = () => {
@@ -21,46 +22,10 @@ const SuperAdminCondominiums = () => {
 
   const fetchCondominiums = async () => {
     try {
-      // Mock data for now
-      setCondominiums([
-        {
-          id: 1,
-          name: "Sunset Heights",
-          address: "123 Sunset Boulevard, City Center",
-          totalUnits: 150,
-          totalBlocks: 5,
-          totalResidents: 420,
-          totalAdmins: 3,
-          amenities: "Swimming Pool, Gym, Parking, Security",
-          status: "ACTIVE",
-          createdAt: new Date().toISOString(),
-        },
-        {
-          id: 2,
-          name: "Ocean View",
-          address: "456 Ocean Drive, Beachfront",
-          totalUnits: 200,
-          totalBlocks: 8,
-          totalResidents: 580,
-          totalAdmins: 4,
-          amenities: "Beach Access, Pool, Tennis Court, Spa",
-          status: "ACTIVE",
-          createdAt: new Date().toISOString(),
-        },
-        {
-          id: 3,
-          name: "Garden Plaza",
-          address: "789 Garden Street, Downtown",
-          totalUnits: 100,
-          totalBlocks: 3,
-          totalResidents: 280,
-          totalAdmins: 2,
-          amenities: "Garden, Playground, Community Hall",
-          status: "ACTIVE",
-          createdAt: new Date().toISOString(),
-        },
-      ]);
+      const response = await condominiumAPI.getAll();
+      setCondominiums(response.data?.data || []);
     } catch (error) {
+      console.error('Failed to fetch condominiums:', error);
       toast.error("Failed to fetch condominiums");
     } finally {
       setLoading(false);
@@ -70,7 +35,13 @@ const SuperAdminCondominiums = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Mock API call
+      const payload = {
+        name: formData.name,
+        location: formData.address,
+        totalBlocks: parseInt(formData.totalBlocks),
+      };
+      
+      await condominiumAPI.create(payload);
       toast.success("Condominium created successfully");
       setShowForm(false);
       setFormData({
@@ -83,7 +54,8 @@ const SuperAdminCondominiums = () => {
       });
       fetchCondominiums();
     } catch (error) {
-      toast.error("Failed to create condominium");
+      console.error('Failed to create condominium:', error);
+      toast.error(error.response?.data?.error || "Failed to create condominium");
     }
   };
 
