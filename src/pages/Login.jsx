@@ -69,7 +69,7 @@ const Login = () => {
       </div>
       {/* Right side - Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center relative z-10 min-h-full px-6 lg:px-0">
-        <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm p-6 lg:p-10 rounded-lg shadow-sm w-full max-w-sm lg:max-w-md">
+        <div className="bg-white lg:bg-white/90 dark:bg-gray-800 lg:dark:bg-gray-800/90 lg:backdrop-blur-sm p-6 lg:p-10 rounded-lg shadow-sm w-full max-w-sm lg:max-w-md">
           <h2 className="text-2xl font-bold text-dark-blue mb-14 text-center">
             Login to RMS
           </h2>
