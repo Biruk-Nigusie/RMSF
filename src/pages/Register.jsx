@@ -5,6 +5,7 @@ import { registerUser } from "../store/authSlice";
 import { condominiumAPI } from "../services/api";
 import { toast } from "react-toastify";
 import signupImage from "../assets/signup.svg";
+import bgImage from "../assets/bg.jpg";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -79,26 +80,40 @@ const Register = () => {
   };
 
   return (
-    <div className="h-[calc(100vh-4rem)] flex flex-col lg:flex-row">
-      {/* Left side - Image */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-light-green to-medium-green items-center justify-center p-6">
+    <div className="h-[calc(100vh-4rem)] flex flex-col lg:flex-row relative">
+      {/* Background image - only on large screens */}
+      <div
+        className="hidden lg:block absolute inset-0"
+        style={{
+          backgroundImage: `url(${bgImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      ></div>
+      {/* Blur overlay - only on large screens */}
+      <div className="hidden lg:block absolute inset-0 backdrop-blur-sm bg-black/20 dark:bg-black/40"></div>
+
+      {/* Left side - Text */}
+      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-light-green/80 to-medium-green/80 items-center justify-center p-6 relative z-10">
         <div className="max-w-sm">
-          <img src={signupImage} alt="Register" className="w-full h-auto" />
-          <div className="text-center mt-4">
-            <h1 className="text-2xl font-bold text-dark-blue mb-2">
-              Join RMS Today!
-            </h1>
-            <p className="text-teal">
-              Create your account and manage your residence
-            </p>
+          <div
+            className="flex flex-column justify-content-center items-center  text-center"
+            style={{ color: "white", flexDirection: "column" }}
+          >
+            <pre className="text-8xl font-bold mb-4">Join RMS Today!</pre>
+
+            <pre className="text-3xl leading-relaxed">
+              Start your journey with us.
+            </pre>
           </div>
         </div>
       </div>
 
       {/* Right side - Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center">
-        <div className="bg-white p-4 lg:p-6 rounded-lg shadow-sm w-full max-w-2xl">
-          <h2 className="text-2xl font-bold text-dark-blue mb-6 text-center">
+      <div className="w-full lg:w-1/2 flex items-center justify-center relative z-10 px-6 lg:px-0">
+        <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm p-6 lg:p-14 rounded-lg shadow-sm w-full max-w-lg lg:max-w-2xl">
+          <h2 className="text-2xl font-bold text-dark-blue mb-16 text-center">
             Register for RMS
           </h2>
 
@@ -295,7 +310,8 @@ const Register = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-medium-green hover:bg-teal text-white font-bold py-2 px-4 rounded-lg transition-colors disabled:opacity-50"
+              className="bg-blue-900 w-full bg-medium-green hover:bg-teal text-white font-bold py-2 px-4 rounded-lg transition-colors disabled:opacity-50 mt-5"
+            style={{color:"white",cursor:"pointer"}}
             >
               {isLoading ? "Registering..." : "Register"}
             </button>

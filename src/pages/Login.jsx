@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { loginUser, clearError } from "../store/authSlice";
 import { toast } from "react-toastify";
 import loginImage from "../assets/login.svg";
+import bgImage from "../assets/bg.jpg";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -37,26 +38,39 @@ const Login = () => {
   };
 
   return (
-    <div className="h-[calc(100vh-4rem)] flex flex-col lg:flex-row">
+    <div className="h-[calc(100vh-4rem)] flex flex-col lg:flex-row relative">
+      {/* Background image - only on large screens */}
+      <div
+        className="hidden lg:block absolute inset-0"
+        style={{
+          backgroundImage: `url(${bgImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      ></div>
+      {/* Blur overlay - only on large screens */}
+      <div className="hidden lg:block absolute inset-0 backdrop-blur-sm bg-black/20 dark:bg-black/40"></div>
+
       {/* Left side - Image */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-light-green to-medium-green items-center justify-center p-6">
+      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-light-green/80 to-medium-green/80 items-center justify-center p-6 relative z-10">
         <div className="max-w-sm">
-          <img src={loginImage} alt="Login" className="w-full h-auto" />
-          <div className="text-center mt-4">
-            <h1 className="text-2xl font-bold text-dark-blue mb-2">
-              Welcome Back!
-            </h1>
-            <p className="text-teal">
-              Access your residential management system
-            </p>
+          <div
+            className="flex flex-column justify-content-center items-center  text-center"
+            style={{ color: "white", flexDirection: "column" }}
+          >
+            <pre className="text-8xl font-bold mb-10">Welcome Back!</pre>
+
+            <pre className="text-3xl leading-relaxed">
+              Smart living. One dashboard.
+            </pre>
           </div>
         </div>
       </div>
-
       {/* Right side - Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center">
-        <div className="bg-white p-2 lg:p-8 rounded-sm shadow-sm w-full max-w-md">
-          <h2 className="text-2xl font-bold text-dark-blue mb-12 text-center">
+      <div className="w-full lg:w-1/2 flex items-center justify-center relative z-10 min-h-full px-6 lg:px-0">
+        <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm p-6 lg:p-10 rounded-lg shadow-sm w-full max-w-sm lg:max-w-md">
+          <h2 className="text-2xl font-bold text-dark-blue mb-14 text-center">
             Login to RMS
           </h2>
 
@@ -114,7 +128,8 @@ const Login = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-medium-green hover:bg-teal text-white font-bold py-2 px-4 rounded-lg transition-colors disabled:opacity-50"
+              className="w-full bg-blue-900 hover:bg-teal text-white font-bold py-2 px-4 rounded-lg transition-colors disabled:opacity-50"
+              style={{ color: "white" }}
             >
               {isLoading ? "Logging in..." : "Login"}
             </button>
