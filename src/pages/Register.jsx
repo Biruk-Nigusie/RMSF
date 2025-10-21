@@ -194,7 +194,7 @@ const Register = () => {
                       name="fullName"
                       value={formData.fullName}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-4 sm:py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                       placeholder="Enter your full name"
                       required
                     />
@@ -212,7 +212,7 @@ const Register = () => {
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
-                        className="w-full pl-16 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                        className="w-full pl-16 pr-4 py-4 sm:py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                         placeholder="9XX XXX XXX"
                         required
                       />
@@ -230,7 +230,7 @@ const Register = () => {
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-4 sm:py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                       placeholder="your@email.com"
                     />
                   </div>
@@ -247,7 +247,7 @@ const Register = () => {
                         name="condominiumId"
                         value={formData.condominiumId}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                        className="w-full px-4 py-4 sm:py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                         required
                       >
                         <option value="">Select Condominium</option>
@@ -272,7 +272,7 @@ const Register = () => {
                       name="block"
                       value={formData.block}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-4 sm:py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                       placeholder="Block A"
                       required
                     />
@@ -286,7 +286,7 @@ const Register = () => {
                       name="houseNo"
                       value={formData.houseNo}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-4 sm:py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                       placeholder="101"
                       required
                     />
@@ -302,7 +302,7 @@ const Register = () => {
                       onChange={handleChange}
                       min="1"
                       max="20"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-4 sm:py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                       required
                     />
                   </div>
@@ -317,7 +317,7 @@ const Register = () => {
                       name="ownershipType"
                       value={formData.ownershipType}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-4 sm:py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                     >
                       <option value="OWNED">Owned</option>
                       <option value="RENTED">Rented</option>
@@ -332,7 +332,7 @@ const Register = () => {
                       name="carPlate"
                       value={formData.carPlate}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-4 sm:py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                       placeholder="3-AAB-123"
                     />
                   </div>
@@ -348,7 +348,7 @@ const Register = () => {
                       name="ownerName"
                       value={formData.ownerName}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-4 sm:py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                       placeholder="Enter owner's full name"
                       required={formData.ownershipType === "RENTED"}
                     />
@@ -366,7 +366,7 @@ const Register = () => {
                       name="password"
                       value={formData.password}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-4 sm:py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                       placeholder="Create a password"
                       required
                     />
@@ -380,7 +380,7 @@ const Register = () => {
                       name="confirmPassword"
                       value={formData.confirmPassword}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-4 sm:py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                       placeholder="Confirm your password"
                       required
                     />

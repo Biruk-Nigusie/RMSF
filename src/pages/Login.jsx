@@ -130,7 +130,7 @@ const Login = () => {
                     name="userType"
                     value={formData.userType}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                    className="w-full px-4 py-4 sm:py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                   >
                     <option value="resident">Resident</option>
                     <option value="admin">Admin</option>
@@ -152,7 +152,7 @@ const Login = () => {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="w-full pl-16 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      className="w-full pl-16 pr-4 py-4 sm:py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                       placeholder="9XX XXX XXX"
                       required
                     />
@@ -169,7 +169,7 @@ const Login = () => {
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                    className="w-full px-4 py-4 sm:py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                     placeholder="Enter your password"
                     required
                   />
@@ -232,14 +232,6 @@ const Login = () => {
                   >
                     Create account
                   </Link>
-                </p>
-              </div>
-
-              {/* Demo Credentials */}
-              <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                <p className="text-xs text-gray-600 text-center">
-                  <strong>Demo:</strong> Use phone: 0912345678 / password:
-                  demo123
                 </p>
               </div>
             </div>
