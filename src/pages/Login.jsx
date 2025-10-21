@@ -50,7 +50,7 @@ const Login = () => {
             <div className="text-center lg:text-left">
               <div className="mb-8">
                 <div className="inline-flex items-center bg-blue-800 px-4 py-2 rounded-full text-sm font-bold mb-6">
-                  🇪🇹 EthioRMS
+                  EthioRMS
                 </div>
                 <h1 className="text-4xl lg:text-5xl font-bold mb-6 leading-tight">
                   Welcome Back!
@@ -130,11 +130,10 @@ const Login = () => {
                     name="userType"
                     value={formData.userType}
                     onChange={handleChange}
-                    className="w-full px-8 py-8 sm:px-4 sm:py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                    className="w-full px-8 py-8 sm:px-4 sm:py-8 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                   >
                     <option value="resident">Resident</option>
                     <option value="admin">Admin</option>
-                    <option value="manager">Property Manager</option>
                   </select>
                 </div>
 
