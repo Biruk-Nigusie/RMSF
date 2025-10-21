@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../store/authSlice";
@@ -21,7 +20,7 @@ const Navbar = ({ sidebarOpen, toggleSidebar }) => {
             {isAuthenticated && (
               <button
                 onClick={toggleSidebar}
-                className="lg:hidden hover:text-medium-green transition-colors"
+                className="lg:hidden hover:text-medium-blue transition-colors"
               >
                 {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
               </button>
@@ -29,7 +28,7 @@ const Navbar = ({ sidebarOpen, toggleSidebar }) => {
 
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-2">
-              <span className="text-lg font-bold text-white hover:text-medium-green transition-colors">
+              <span className="text-lg font-bold text-white hover:text-medium-blue transition-colors">
                 RMSF
               </span>
             </Link>
@@ -38,19 +37,19 @@ const Navbar = ({ sidebarOpen, toggleSidebar }) => {
             <div className="hidden md:flex space-x-6 ml-6">
               <Link
                 to="/"
-                className="hover:text-medium-green transition-colors font-medium"
+                className="hover:text-medium-blue transition-colors font-medium"
               >
                 Home
               </Link>
               <Link
                 to="/about"
-                className="hover:text-medium-green transition-colors font-medium"
+                className="hover:text-medium-blue transition-colors font-medium"
               >
                 About
               </Link>
               <Link
                 to="/contact"
-                className="hover:text-medium-green transition-colors font-medium"
+                className="hover:text-medium-blue transition-colors font-medium"
               >
                 Contact
               </Link>
@@ -63,7 +62,7 @@ const Navbar = ({ sidebarOpen, toggleSidebar }) => {
               <>
                 <Link
                   to="/profile"
-                  className="hidden sm:flex items-center space-x-2 hover:text-medium-green transition-colors"
+                  className="hidden sm:flex items-center space-x-2 hover:text-medium-blue transition-colors"
                 >
                   <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
                     {user?.profileImage ? (
@@ -84,7 +83,7 @@ const Navbar = ({ sidebarOpen, toggleSidebar }) => {
                 {/* Mobile profile icon */}
                 <Link
                   to="/profile"
-                  className="sm:hidden hover:text-medium-green transition-colors"
+                  className="sm:hidden hover:text-medium-blue transition-colors"
                 >
                   <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
                     {user?.profileImage ? (
@@ -101,7 +100,7 @@ const Navbar = ({ sidebarOpen, toggleSidebar }) => {
 
                 <button
                   onClick={handleLogout}
-                  className="flex items-center space-x-1 hover:text-medium-green transition-colors"
+                  className="flex items-center space-x-1 hover:text-medium-blue transition-colors"
                 >
                   <LogOut size={20} />
                   <span className="hidden sm:inline">Logout</span>
@@ -110,10 +109,9 @@ const Navbar = ({ sidebarOpen, toggleSidebar }) => {
             ) : (
               <Link
                 to="/login"
-                className="bg-blue-900 hover:bg-teal px-3 sm:px-8 py-2 rounded transition-colors text-sm sm:text-base"
-                style={{ color: "white" }}
+                className="bg-blue-900 hover:bg-blue-800 px-3 sm:px-8 py-2 rounded transition-colors text-sm sm:text-base text-white"
               >
-                <strong>Login</strong>
+                <strong style={{ color: "white" }}>Login</strong>
               </Link>
             )}
           </div>

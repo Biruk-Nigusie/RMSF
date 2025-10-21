@@ -78,22 +78,25 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-blue-50 p-4">
+    <div className="min-h-screen flex items-center justify-center p-2">
       {/* Main Container */}
-      <div className="w-full max-w-7xl bg-white rounded-2xl shadow-2xl overflow-hidden">
+
+      <div className="w-full max-w-7xl bg-white rounded-2xl shadow-sm overflow-hidden">
         <div className="flex flex-col lg:flex-row min-h-[800px]">
-          
           {/* Left Side - Welcome Section */}
-          <div className="lg:w-2/5 bg-gradient-to-br from-green-600 to-green-800 text-white p-8 lg:p-12 flex flex-col justify-center">
+          <div
+            className="lg:w-2/5 bg-blue-900 text-white p-8 lg:p-10 flex flex-col justify-center"
+            style={{ color: "white" }}
+          >
             <div className="text-center lg:text-left">
               <div className="mb-8">
-                <div className="inline-flex items-center bg-yellow-400 text-green-900 px-4 py-2 rounded-full text-sm font-bold mb-6">
+                <div className="inline-flex items-center bg-blue-800 px-4 py-2 rounded-full text-sm font-bold mb-6">
                   🇪🇹 EthioRMS
                 </div>
                 <h1 className="text-4xl lg:text-5xl font-bold mb-6 leading-tight">
                   Join EthioRMS Today!
                 </h1>
-                <p className="text-xl lg:text-2xl text-green-100 leading-relaxed">
+                <p className="text-xl lg:text-2xl text-blue-100 leading-relaxed">
                   Start your journey with us.
                   <br />
                   Manage your condominium life seamlessly.
@@ -103,34 +106,38 @@ const Register = () => {
               {/* Benefits List */}
               <div className="space-y-4 mt-8">
                 <div className="flex items-center">
-                  <div className="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center mr-4">
-                    <span className="text-green-900 font-bold">✓</span>
+                  <div className="w-8 h-8  rounded-full flex items-center justify-center mr-4">
+                    <span className="text-blue-900 font-bold">✓</span>
                   </div>
-                  <span className="text-green-100">Easy Rent & Utility Payments</span>
+                  <span className="text-blue-100">
+                    Easy Rent & Utility Payments
+                  </span>
                 </div>
                 <div className="flex items-center">
-                  <div className="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center mr-4">
-                    <span className="text-green-900 font-bold">✓</span>
+                  <div className="w-8 h-8  rounded-full flex items-center justify-center mr-4">
+                    <span className="text-blue-900 font-bold">✓</span>
                   </div>
-                  <span className="text-green-100">Maintenance Request Tracking</span>
+                  <span className="text-blue-100">
+                    Maintenance Request Tracking
+                  </span>
                 </div>
                 <div className="flex items-center">
-                  <div className="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center mr-4">
-                    <span className="text-green-900 font-bold">✓</span>
+                  <div className="w-8 h-8  rounded-full flex items-center justify-center mr-4">
+                    <span className="text-blue-900 font-bold">✓</span>
                   </div>
-                  <span className="text-green-100">Community Announcements</span>
+                  <span className="text-blue-100">Community Announcements</span>
                 </div>
                 <div className="flex items-center">
-                  <div className="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center mr-4">
-                    <span className="text-green-900 font-bold">✓</span>
+                  <div className="w-8 h-8  rounded-full flex items-center justify-center mr-4">
+                    <span className="text-blue-900 font-bold">✓</span>
                   </div>
-                  <span className="text-green-100">24/7 Amharic Support</span>
+                  <span className="text-blue-100">24/7 Amharic Support</span>
                 </div>
               </div>
 
               {/* Already have account for mobile */}
               <div className="mt-8 lg:hidden text-center">
-                <p className="text-green-200">
+                <p className="text-blue-200">
                   Already have an account?{" "}
                   <Link
                     to="/login"
@@ -159,8 +166,16 @@ const Register = () => {
               {/* Error Message */}
               {error && (
                 <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 flex items-center">
-                  <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                  <svg
+                    className="w-5 h-5 mr-2"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                   {error}
                 </div>
@@ -179,7 +194,7 @@ const Register = () => {
                       name="fullName"
                       value={formData.fullName}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                       placeholder="Enter your full name"
                       required
                     />
@@ -197,7 +212,7 @@ const Register = () => {
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
-                        className="w-full pl-16 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
+                        className="w-full pl-16 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                         placeholder="9XX XXX XXX"
                         required
                       />
@@ -215,7 +230,7 @@ const Register = () => {
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                       placeholder="your@email.com"
                     />
                   </div>
@@ -232,7 +247,7 @@ const Register = () => {
                         name="condominiumId"
                         value={formData.condominiumId}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                         required
                       >
                         <option value="">Select Condominium</option>
@@ -257,7 +272,7 @@ const Register = () => {
                       name="block"
                       value={formData.block}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                       placeholder="Block A"
                       required
                     />
@@ -271,7 +286,7 @@ const Register = () => {
                       name="houseNo"
                       value={formData.houseNo}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                       placeholder="101"
                       required
                     />
@@ -287,7 +302,7 @@ const Register = () => {
                       onChange={handleChange}
                       min="1"
                       max="20"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                       required
                     />
                   </div>
@@ -302,7 +317,7 @@ const Register = () => {
                       name="ownershipType"
                       value={formData.ownershipType}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                     >
                       <option value="OWNED">Owned</option>
                       <option value="RENTED">Rented</option>
@@ -317,7 +332,7 @@ const Register = () => {
                       name="carPlate"
                       value={formData.carPlate}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                       placeholder="3-AAB-123"
                     />
                   </div>
@@ -333,7 +348,7 @@ const Register = () => {
                       name="ownerName"
                       value={formData.ownerName}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                       placeholder="Enter owner's full name"
                       required={formData.ownershipType === "RENTED"}
                     />
@@ -351,7 +366,7 @@ const Register = () => {
                       name="password"
                       value={formData.password}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                       placeholder="Create a password"
                       required
                     />
@@ -365,7 +380,7 @@ const Register = () => {
                       name="confirmPassword"
                       value={formData.confirmPassword}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                       placeholder="Confirm your password"
                       required
                     />
@@ -376,13 +391,30 @@ const Register = () => {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold py-4 px-4 rounded-xl transition-all duration-300 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg hover:shadow-xl mt-6"
+                  className="w-full bg-blue-900 font-semibold py-4 px-4 rounded-xl transition-all duration-300 transform mt-6 cursor-pointer"
+                  style={{ color: "white" }}
                 >
                   {isLoading ? (
                     <div className="flex items-center justify-center">
-                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      <svg
+                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
                       </svg>
                       Creating Account...
                     </div>
@@ -398,7 +430,7 @@ const Register = () => {
                   Already have an account?{" "}
                   <Link
                     to="/login"
-                    className="text-green-600 hover:text-green-700 font-semibold transition-colors duration-200"
+                    className="text-blue-600 hover:text-blue-700 font-semibold transition-colors duration-200"
                   >
                     Login here
                   </Link>

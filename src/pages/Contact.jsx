@@ -1,16 +1,16 @@
 // pages/Contact.jsx
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { 
-  MapPin, 
-  Phone, 
-  Mail, 
-  Clock, 
+import {
+  MapPin,
+  Phone,
+  Mail,
+  Clock,
   Send,
   MessageCircle,
   Building,
   User,
-  CheckCircle
+  CheckCircle,
 } from "lucide-react";
 
 const Contact = () => {
@@ -20,30 +20,30 @@ const Contact = () => {
     phone: "",
     subject: "",
     message: "",
-    inquiryType: "general"
+    inquiryType: "general",
   });
-  
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+
     console.log("Form submitted:", formData);
     setIsSubmitting(false);
     setIsSubmitted(true);
-    
+
     // Reset form after success
     setTimeout(() => {
       setFormData({
@@ -52,7 +52,7 @@ const Contact = () => {
         phone: "",
         subject: "",
         message: "",
-        inquiryType: "general"
+        inquiryType: "general",
       });
       setIsSubmitted(false);
     }, 5000);
@@ -62,27 +62,19 @@ const Contact = () => {
     {
       icon: <MapPin size={24} />,
       title: "Visit Our Office",
-      details: ["Bole Road, Friendship Building", "6th Floor, Suite 601", "Addis Ababa, Ethiopia"],
-      description: "Located in the heart of Bole, Addis Ababa"
+      details: [
+        "Bole Road, Friendship Building",
+        "6th Floor, Suite 601",
+        "Addis Ababa, Ethiopia",
+      ],
+      description: "Located in the heart of Bole, Addis Ababa",
     },
     {
       icon: <Phone size={24} />,
       title: "Call Us",
       details: ["+251 91 234 5678", "+251 92 345 6789"],
-      description: "Available Monday-Saturday, 8:30AM-6:30PM EAT"
+      description: "Available Monday-Saturday, 8:30AM-6:30PM EAT",
     },
-    {
-      icon: <Mail size={24} />,
-      title: "Email Us",
-      details: ["support@addisrms.com", "info@addisrms.com"],
-      description: "We'll respond within 24 hours"
-    },
-    {
-      icon: <Clock size={24} />,
-      title: "Business Hours",
-      details: ["Monday - Friday: 8:30 AM - 6:30 PM", "Saturday: 9:00 AM - 2:00 PM", "Sunday: Closed"],
-      description: "Addis Ababa local time"
-    }
   ];
 
   const inquiryTypes = [
@@ -93,45 +85,73 @@ const Contact = () => {
     { value: "feature", label: "Feature Request" },
     { value: "partnership", label: "Partnership" },
     { value: "condominium", label: "Condominium Setup" },
-    { value: "training", label: "Training Request" }
+    { value: "training", label: "Training Request" },
   ];
 
   const faqs = [
     {
-      question: "How quickly do you respond to support requests in Addis Ababa?",
-      answer: "We typically respond to all support requests within 2-4 hours during business hours in Addis Ababa time. Emergency issues are prioritized and addressed immediately."
+      question:
+        "How quickly do you respond to support requests in Addis Ababa?",
+      answer:
+        "We typically respond to all support requests within 2-4 hours during business hours in Addis Ababa time. Emergency issues are prioritized and addressed immediately.",
     },
     {
       question: "Do you offer custom solutions for Addis Ababa condominiums?",
-      answer: "Yes, we provide customized solutions specifically designed for Addis Ababa's condominium complexes and property management needs. Contact our local team for a tailored demo."
+      answer:
+        "Yes, we provide customized solutions specifically designed for Addis Ababa's condominium complexes and property management needs. Contact our local team for a tailored demo.",
     },
     {
       question: "What local payment methods do you support?",
-      answer: "We support all major Ethiopian payment methods including CBE Birr, Tele Birr, M-Birr, HelloCash, and bank transfers for Addis Ababa residents."
+      answer:
+        "We support all major Ethiopian payment methods including CBE Birr, Tele Birr, M-Birr, HelloCash, and bank transfers for Addis Ababa residents.",
     },
     {
       question: "Do you provide Amharic language support?",
-      answer: "Absolutely! All our support services are available in both Amharic and English. Our local team in Addis Ababa provides comprehensive assistance in your preferred language."
-    }
+      answer:
+        "Absolutely! All our support services are available in both Amharic and English. Our local team in Addis Ababa provides comprehensive assistance in your preferred language.",
+    },
   ];
 
   const addisSubcities = [
-    "Bole", "Kirkos", "Yeka", "Gulele", "Arada", 
-    "Addis Ketema", "Lideta", "Nifas Silk", "Kolfe Keranio", "Akaki Kality"
+    "Bole",
+    "Kirkos",
+    "Yeka",
+    "Gulele",
+    "Arada",
+    "Addis Ketema",
+    "Lideta",
+    "Nifas Silk",
+    "Kolfe Keranio",
+    "Akaki Kality",
   ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
       {/* Hero Section */}
-      <section className="relative py-16 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 text-white">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/90 to-indigo-700/90"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center bg-yellow-400 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold mb-6">
+
+      <section className="relative py-16 bg-blue-900">
+        <div className="absolute inset-0 opacity-5 ">
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='120' height='80' viewBox='0 0 120 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 40 L20 20 L30 40 L40 15 L50 40 L60 25 L70 40 L80 10 L90 40 L100 30 L110 40 L120 20' stroke='%23ffffff' stroke-width='2' fill='none'/%3E%3Cpath d='M15 40 L15 80 M25 20 L25 80 M35 40 L35 80 M45 15 L45 80 M55 40 L55 80 M65 25 L65 80 M75 40 L75 80 M85 10 L85 80 M95 40 L95 80 M105 30 L105 80 M115 40 L115 80' stroke='%23ffffff' stroke-width='1'/%3E%3C/svg%3E")`,
+              backgroundSize: "300px 200px",
+            }}
+          ></div>
+        </div>
+        <div
+          className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center "
+          style={{ color: "white" }}
+        >
+          <div className="inline-flex items-center bg-blue-800  px-4 py-2 rounded-full text-sm font-semibold mb-6">
             🇪🇹 Addis Ababa • አዲስ አበባ
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Contact AddisRMS</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            Contact AddisRMS
+          </h1>
           <p className="text-xl text-blue-100 max-w-2xl mx-auto">
-            Get in touch with our Addis Ababa team. We're here to help you manage your properties better in the capital.
+            Get in touch with our Addis Ababa team. We're here to help you
+            manage your properties better in the capital.
           </p>
         </div>
       </section>
@@ -140,19 +160,24 @@ const Contact = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid lg:grid-cols-3 gap-12">
           {/* Contact Form */}
-          <div className="lg:col-span-2">
-            <div className="bg-white rounded-2xl shadow-lg p-8 border border-blue-100">
+          <div className="lg:col-span-2" style={{ color: "#1C398E" }}>
+            <div className="bg-white rounded-2xl shadow-sm p-8 border border-blue-100">
               <div className="flex items-center space-x-3 mb-6">
-                <MessageCircle className="text-blue-600" size={28} />
-                <h2 className="text-2xl font-bold text-gray-900">Send us a Message</h2>
+                <MessageCircle className="text-blue-900" size={28} />
+                <h2 className="text-2xl font-bold text-gray-900">
+                  Send us a Message
+                </h2>
               </div>
 
               {isSubmitted ? (
                 <div className="text-center py-12">
-                  <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Message Sent!</h3>
+                  <CheckCircle className="w-16 h-16 text-blue-500 mx-auto mb-4" />
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                    Message Sent!
+                  </h3>
                   <p className="text-gray-600 mb-6">
-                    Thank you for contacting AddisRMS. We'll get back to you within 24 hours.
+                    Thank you for contacting AddisRMS. We'll get back to you
+                    within 24 hours.
                   </p>
                   <button
                     onClick={() => setIsSubmitted(false)}
@@ -169,7 +194,10 @@ const Contact = () => {
                         Full Name *
                       </label>
                       <div className="relative">
-                        <User size={18} className="absolute left-3 top-3.5 text-gray-400" />
+                        <User
+                          size={18}
+                          className="absolute left-3 top-3.5 text-gray-400"
+                        />
                         <input
                           type="text"
                           name="name"
@@ -187,7 +215,10 @@ const Contact = () => {
                         Email Address *
                       </label>
                       <div className="relative">
-                        <Mail size={18} className="absolute left-3 top-3.5 text-gray-400" />
+                        <Mail
+                          size={18}
+                          className="absolute left-3 top-3.5 text-gray-400"
+                        />
                         <input
                           type="email"
                           name="email"
@@ -207,8 +238,13 @@ const Contact = () => {
                         Phone Number *
                       </label>
                       <div className="relative">
-                        <Phone size={18} className="absolute left-3 top-3.5 text-gray-400" />
-                        <div className="absolute left-10 top-3.5 text-gray-500">+251</div>
+                        <Phone
+                          size={18}
+                          className="absolute left-3 top-3.5 text-gray-400"
+                        />
+                        <div className="absolute left-10 top-3.5 text-gray-500">
+                          +251
+                        </div>
                         <input
                           type="tel"
                           name="phone"
@@ -273,7 +309,8 @@ const Contact = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white py-4 px-6 rounded-lg font-semibold transition-colors flex items-center justify-center space-x-2"
+                    className="w-full bg-blue-900 disabled:bg-gray-400 text-white py-4 px-6 rounded-lg font-semibold transition-colors flex items-center justify-center space-x-2"
+                    style={{ color: "white" }}
                   >
                     {isSubmitting ? (
                       <>
@@ -292,13 +329,16 @@ const Contact = () => {
             </div>
 
             {/* FAQ Section */}
-            <div className="mt-12">
+            <div className="mt-12" style={{ color: "#1C398E" }}>
               <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
                 Frequently Asked Questions
               </h2>
               <div className="grid md:grid-cols-2 gap-6">
                 {faqs.map((faq, index) => (
-                  <div key={index} className="bg-white rounded-xl p-6 shadow-md border border-blue-50">
+                  <div
+                    key={index}
+                    className="bg-white rounded-xl p-6 shadow-sm border border-blue-50"
+                  >
                     <h3 className="text-lg font-semibold text-gray-900 mb-3">
                       {faq.question}
                     </h3>
@@ -312,14 +352,17 @@ const Contact = () => {
           </div>
 
           {/* Contact Information */}
-          <div className="space-y-8">
+          <div className="space-y-8" style={{ color: "#1C398E" }}>
             {/* Contact Info Cards */}
             <div className="space-y-6">
               <h2 className="text-2xl font-bold text-gray-900">Get in Touch</h2>
               {contactInfo.map((info, index) => (
-                <div key={index} className="bg-white rounded-xl p-6 shadow-md border border-blue-50">
+                <div
+                  key={index}
+                  className="bg-white rounded-xl p-6 shadow-sm border border-blue-50"
+                >
                   <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 flex-shrink-0">
+                    <div className="w-12 h-12  rounded-lg flex items-center justify-center text-blue-600 flex-shrink-0">
                       {info.icon}
                     </div>
                     <div>
@@ -339,106 +382,42 @@ const Contact = () => {
                 </div>
               ))}
             </div>
-
-            {/* Quick Support */}
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl p-6 text-white">
-              <Building size={32} className="mb-4" />
-              <h3 className="text-xl font-bold mb-2">Need Immediate Help?</h3>
-              <p className="text-blue-100 mb-4">
-                Our Addis Ababa support team is ready to assist you with any urgent matters.
-              </p>
-              <div className="space-y-2">
-                <div className="flex items-center space-x-2">
-                  <Phone size={16} />
-                  <span className="font-semibold">Emergency Hotline:</span>
-                </div>
-                <div className="text-lg font-bold">+251 91 911 9111</div>
-                <p className="text-sm text-blue-200">
-                  24/7 for critical system issues in Addis Ababa
-                </p>
-              </div>
-            </div>
-
-            {/* Addis Ababa Coverage */}
-            <div className="bg-white rounded-xl p-6 shadow-md border border-blue-50">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                Serving All Addis Ababa
-              </h3>
-              <div className="grid grid-cols-2 gap-2">
-                {addisSubcities.map((subcity, index) => (
-                  <div key={index} className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                    <span className="text-sm text-gray-600">{subcity}</span>
-                  </div>
-                ))}
-              </div>
-              <p className="text-sm text-gray-500 mt-3">
-                Complete coverage across all 10 subcities of Addis Ababa
-              </p>
-            </div>
-
-            {/* Additional Resources */}
-            <div className="bg-white rounded-xl p-6 shadow-md border border-blue-50">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                Additional Resources
-              </h3>
-              <div className="space-y-3">
-                <Link
-                  to="/help"
-                  className="flex items-center space-x-3 text-gray-600 hover:text-blue-600 transition-colors"
-                >
-                  <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                    📚
-                  </div>
-                  <span>Help Center & Documentation</span>
-                </Link>
-                <Link
-                  to="/demo"
-                  className="flex items-center space-x-3 text-gray-600 hover:text-blue-600 transition-colors"
-                >
-                  <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                    🎬
-                  </div>
-                  <span>Schedule a Demo</span>
-                </Link>
-                <Link
-                  to="/pricing"
-                  className="flex items-center space-x-3 text-gray-600 hover:text-blue-600 transition-colors"
-                >
-                  <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                    💰
-                  </div>
-                  <span>View Pricing Plans</span>
-                </Link>
-              </div>
-            </div>
           </div>
         </div>
       </div>
 
       {/* Map Section */}
-      <section className="bg-white py-16 border-t border-gray-200">
+      <section
+        className="bg-white py-16 border-t border-gray-200"
+        style={{ color: "#1C398E" }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
               Visit Our Addis Ababa Office
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Located in the heart of Bole, our headquarters is easily accessible 
-              and equipped with modern facilities to serve you better across Addis Ababa.
+              Located in the heart of Bole, our headquarters is easily
+              accessible and equipped with modern facilities to serve you better
+              across Addis Ababa.
             </p>
           </div>
-          
+
           {/* Placeholder for Map */}
           <div className="bg-gradient-to-br from-blue-100 to-indigo-100 rounded-2xl h-96 flex items-center justify-center border border-blue-200">
             <div className="text-center">
               <MapPin size={48} className="text-blue-500 mx-auto mb-4" />
-              <p className="text-gray-700 text-lg font-semibold">Addis Ababa Office Location</p>
+              <p className="text-gray-700 text-lg font-semibold">
+                Addis Ababa Office Location
+              </p>
               <p className="text-gray-600 text-sm mt-2">
                 Bole Road, Friendship Building, 6th Floor, Suite 601
               </p>
               <p className="text-gray-500 text-sm">Addis Ababa, Ethiopia</p>
-              <div className="mt-4 inline-flex items-center bg-yellow-400 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+              <div
+                className="mt-4 inline-flex items-center bg-blue-900 text-blue-800 px-6 py-2 rounded-full text-sm font-medium"
+                style={{ color: "white" }}
+              >
                 🇪🇹 Located in Bole, Addis Ababa
               </div>
             </div>
