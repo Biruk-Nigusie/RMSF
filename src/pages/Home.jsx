@@ -130,7 +130,7 @@ const Home = () => {
               className="inline-flex items-center bg-blue-800 text-blue-800 px-5 py-3 rounded-full text-sm font-semibold mb-6"
               style={{ color: "white" }}
             >
-              🇪🇹 Addis Ababa • አዲስ አበባ
+              Addis Ababa • አዲስ አበባ
             </div>
 
             <h1
