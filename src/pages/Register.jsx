@@ -91,7 +91,7 @@ const Register = () => {
             <div className="text-center lg:text-left">
               <div className="mb-8">
                 <div className="inline-flex items-center bg-blue-800 px-4 py-2 rounded-full text-sm font-bold mb-6">
-                  🇪🇹 EthioRMS
+                  EthioRMS
                 </div>
                 <h1 className="text-4xl lg:text-5xl font-bold mb-6 leading-tight">
                   Join EthioRMS Today!
@@ -141,7 +141,7 @@ const Register = () => {
                   Already have an account?{" "}
                   <Link
                     to="/login"
-                    className="text-yellow-300 hover:text-yellow-200 font-semibold underline"
+                    className="text-blue-300 hover:text-blue-200 font-semibold underline"
                   >
                     Login here
                   </Link>
@@ -425,7 +425,7 @@ const Register = () => {
               </form>
 
               {/* Login Link */}
-              <div className="text-center mt-6 pt-6 border-t border-gray-200 hidden lg:block">
+              <div className="text-center mt-6 pt-6 border-t border-gray-200">
                 <p className="text-gray-600">
                   Already have an account?{" "}
                   <Link
