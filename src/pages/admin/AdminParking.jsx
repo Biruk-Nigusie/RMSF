@@ -614,7 +614,7 @@ const AdminParking = () => {
                         Payment Proof Document
                       </p>
                       <a
-                        href={`https://rmsb-2wjb.onrender.com/uploads/documents/${selectedRequest.document}`}
+                        href={`http://localhost:3000/uploads/documents/${selectedRequest.document}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm inline-block"

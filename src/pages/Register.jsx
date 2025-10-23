@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { registerUser } from "../store/authSlice";
 import { condominiumAPI } from "../services/api";
 import { toast } from "react-toastify";
+import { Eye, EyeOff } from "lucide-react";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -22,6 +23,8 @@ const Register = () => {
   });
   const [condominiums, setCondominiums] = useState([]);
   const [loadingCondominiums, setLoadingCondominiums] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -58,10 +61,18 @@ const Register = () => {
       return;
     }
 
+    // Validate Ethiopian phone number format (9 digits: 900000000)
+    const phoneRegex = /^[79]\d{8}$/;
+    if (!phoneRegex.test(formData.phone)) {
+      toast.error("Invalid phone number. Must be 9 digits starting with 7 or 9");
+      return;
+    }
+    const fullPhone = `+251${formData.phone}`;
+
     console.log("Submitting registration form:", formData);
 
     try {
-      const result = await dispatch(registerUser(formData));
+      const result = await dispatch(registerUser({...formData, phone: fullPhone}));
       console.log("Registration result:", result);
 
       if (result.type === "auth/register/fulfilled") {
@@ -361,29 +372,47 @@ const Register = () => {
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
                       Password *
                     </label>
-                    <input
-                      type="password"
-                      name="password"
-                      value={formData.password}
-                      onChange={handleChange}
-                      className="w-full px-4 py-4 sm:py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                      placeholder="Create a password"
-                      required
-                    />
+                    <div className="relative">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        className="w-full px-4 py-4 sm:py-3 pr-12 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                        placeholder="Create a password"
+                        required
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                      >
+                        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                      </button>
+                    </div>
                   </div>
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
                       Confirm Password *
                     </label>
-                    <input
-                      type="password"
-                      name="confirmPassword"
-                      value={formData.confirmPassword}
-                      onChange={handleChange}
-                      className="w-full px-4 py-4 sm:py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                      placeholder="Confirm your password"
-                      required
-                    />
+                    <div className="relative">
+                      <input
+                        type={showConfirmPassword ? "text" : "password"}
+                        name="confirmPassword"
+                        value={formData.confirmPassword}
+                        onChange={handleChange}
+                        className="w-full px-4 py-4 sm:py-3 pr-12 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                        placeholder="Confirm your password"
+                        required
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                      >
+                        {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                      </button>
+                    </div>
                   </div>
                 </div>
 

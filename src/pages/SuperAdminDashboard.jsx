@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { dashboardAPI } from "../services/api";
-import { Building, Users, Shield, Activity } from "lucide-react";
+import api from "../services/api";
+import { Building, Users, Shield, Activity, X } from "lucide-react";
 
 const SuperAdminDashboard = () => {
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showResidentsModal, setShowResidentsModal] = useState(false);
+  const [residentsPerBlock, setResidentsPerBlock] = useState([]);
 
   useEffect(() => {
     const fetchDashboard = async () => {
@@ -19,7 +22,35 @@ const SuperAdminDashboard = () => {
     };
 
     fetchDashboard();
+    fetchResidentsData();
   }, []);
+
+  const fetchResidentsData = async () => {
+    try {
+      const response = await api.get('/residents');
+      const residents = response.data?.data || [];
+      
+      // Group residents by block
+      const blockCounts = residents.reduce((acc, resident) => {
+        const block = resident.block || 'Unknown';
+        acc[block] = (acc[block] || 0) + 1;
+        return acc;
+      }, {});
+      
+      const blockData = Object.entries(blockCounts).map(([block, count]) => ({
+        block,
+        count
+      }));
+      
+      setResidentsPerBlock(blockData);
+    } catch (error) {
+      console.error('Failed to fetch residents data:', error);
+    }
+  };
+
+  const handleResidentsClick = () => {
+    setShowResidentsModal(true);
+  };
 
   if (loading) {
     return (
@@ -61,15 +92,18 @@ const SuperAdminDashboard = () => {
           <p className="text-gray-600">System administrators</p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm p-6">
+        <div 
+          className="bg-white rounded-lg shadow-sm p-6 cursor-pointer hover:shadow-md transition-shadow"
+          onClick={handleResidentsClick}
+        >
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-xl font-semibold text-teal">Residents</h3>
             <Users className="text-medium-green" size={24} />
           </div>
           <p className="text-2xl font-bold text-dark-blue">
-            {dashboardData?.stats?.totalResidents || 0}
+            {residentsPerBlock.reduce((sum, block) => sum + block.count, 0)}
           </p>
-          <p className="text-gray-600">Total residents</p>
+          <p className="text-gray-600">Total residents (click to view by block)</p>
         </div>
 
         <div className="bg-white rounded-lg shadow-sm p-6">
@@ -121,6 +155,42 @@ const SuperAdminDashboard = () => {
           </table>
         </div>
       </div>
+
+      {/* Residents Modal */}
+      {showResidentsModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-semibold text-dark-blue">Residents per Block</h3>
+              <button 
+                onClick={() => setShowResidentsModal(false)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <X size={24} />
+              </button>
+            </div>
+            <div className="space-y-3">
+              {residentsPerBlock.map((block) => (
+                <div key={block.block} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                  <span className="font-medium text-gray-700">Block {block.block}</span>
+                  <span className="text-lg font-bold text-dark-blue">{block.count}</span>
+                </div>
+              ))}
+              {residentsPerBlock.length === 0 && (
+                <p className="text-gray-500 text-center py-4">No residents found</p>
+              )}
+            </div>
+            <div className="mt-6 pt-4 border-t">
+              <div className="flex justify-between items-center">
+                <span className="font-semibold text-gray-700">Total Residents:</span>
+                <span className="text-xl font-bold text-dark-blue">
+                  {residentsPerBlock.reduce((sum, block) => sum + block.count, 0)}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

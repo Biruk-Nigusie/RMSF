@@ -40,6 +40,8 @@ import AdminParking from "./pages/admin/AdminParking";
 import SuperAdminDashboard from "./pages/SuperAdminDashboard";
 import SuperAdminCondominiums from "./pages/superadmin/SuperAdminCondominiums";
 import SuperAdminAdmins from "./pages/superadmin/SuperAdminAdmins";
+import AuditLogs from "./pages/superadmin/AuditLogs";
+import DataManagement from "./pages/superadmin/DataManagement";
 
 function App() {
   return (
@@ -139,6 +141,22 @@ function App() {
                 element={
                   <ProtectedRoute requiredRole="super_admin">
                     <SuperAdminAdmins />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="super-admin/audit-logs"
+                element={
+                  <ProtectedRoute requiredRole="super_admin">
+                    <AuditLogs />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="super-admin/data-management"
+                element={
+                  <ProtectedRoute requiredRole="super_admin">
+                    <DataManagement />
                   </ProtectedRoute>
                 }
               />

@@ -442,7 +442,7 @@ const EkubEddir = () => {
                     {selectedGroup.qrCodePath ? (
                       <div>
                         <img
-                          src={`https://rmsb-2wjb.onrender.com/uploads/qr-codes/${selectedGroup.qrCodePath}`}
+                          src={`http://localhost:3000/uploads/qr-codes/${selectedGroup.qrCodePath}`}
                           alt="Payment QR Code"
                           className="pt-4 ml-auto mr-auto w-100 h-100 object-cover flex align-items-center justify-content-center"
                           onLoad={() =>
@@ -458,7 +458,7 @@ const EkubEddir = () => {
                             );
                             console.error(
                               "Full URL:",
-                              `https://rmsb-2wjb.onrender.com/uploads/qr-codes/${selectedGroup.qrCodePath}`
+                              `http://localhost:3000/uploads/qr-codes/${selectedGroup.qrCodePath}`
                             );
                             e.target.style.display = "none";
                             e.target.nextElementSibling.style.display = "flex";

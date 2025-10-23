@@ -1,82 +1,114 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { Plus, Edit, Trash2, Eye, Shield } from "lucide-react";
+import { Plus, Edit, Trash2, Shield, Eye, EyeOff } from "lucide-react";
+import { condominiumAPI } from "../../services/api";
+import api from "../../services/api";
 
 const SuperAdminAdmins = () => {
   const [admins, setAdmins] = useState([]);
+  const [condominiums, setCondominiums] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
+  const [editingId, setEditingId] = useState(null);
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    name: "",
     email: "",
     phone: "",
-    condominiumId: "",
+    assignedCondominium: "",
+    password: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     fetchAdmins();
+    fetchCondominiums();
   }, []);
 
   const fetchAdmins = async () => {
     try {
-      // Mock data for now
-      setAdmins([
-        {
-          id: 1,
-          firstName: "John",
-          lastName: "Smith",
-          email: "john.admin@example.com",
-          phone: "+1234567890",
-          condominium: { name: "Sunset Heights" },
-          status: "ACTIVE",
-          createdAt: new Date().toISOString(),
-        },
-        {
-          id: 2,
-          firstName: "Sarah",
-          lastName: "Johnson",
-          email: "sarah.admin@example.com",
-          phone: "+1234567891",
-          condominium: { name: "Ocean View" },
-          status: "ACTIVE",
-          createdAt: new Date().toISOString(),
-        },
-      ]);
+      const response = await api.get('/admins');
+      setAdmins(response.data?.data || []);
     } catch (error) {
+      console.error('Failed to fetch admins:', error);
       toast.error("Failed to fetch admins");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const fetchCondominiums = async () => {
     try {
-      // Mock API call
-      toast.success("Admin created successfully");
-      setShowForm(false);
-      setFormData({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        condominiumId: "",
-      });
-      fetchAdmins();
+      const response = await condominiumAPI.getAll();
+      setCondominiums(response.data?.data || []);
     } catch (error) {
-      toast.error("Failed to create admin");
+      console.error('Failed to fetch condominiums:', error);
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    const phoneRegex = /^[79]\d{8}$/;
+    if (!phoneRegex.test(formData.phone)) {
+      toast.error("Invalid phone number. Must be 9 digits starting with 7 or 9");
+      return;
+    }
+    
+    try {
+      const payload = {
+        name: formData.name,
+        email: formData.email,
+        phone: `+251${formData.phone}`,
+        assignedCondominium: formData.assignedCondominium,
+        password: formData.password || 'admin123',
+        role: 'ADMIN'
+      };
+      
+      if (editingId) {
+        await api.put(`/admins/${editingId}`, payload);
+        toast.success("Admin updated successfully");
+      } else {
+        await api.post('/admins', payload);
+        toast.success("Admin created successfully");
+      }
+      
+      setShowForm(false);
+      setEditingId(null);
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        assignedCondominium: "",
+        password: "",
+      });
+      fetchAdmins();
+    } catch (error) {
+      console.error('Failed to save admin:', error);
+      toast.error(error.response?.data?.error || "Failed to save admin");
+    }
+  };
+
+  const handleEdit = (admin) => {
+    setEditingId(admin.id);
+    setFormData({
+      name: admin.name,
+      email: admin.email,
+      phone: admin.phone.replace('+251', ''),
+      assignedCondominium: admin.assignedCondominium || '',
+      password: '',
+    });
+    setShowForm(true);
+  };
+
   const handleDelete = async (id) => {
-    if (window.confirm("Are you sure you want to delete this admin?")) {
+    if (window.confirm("Are you sure you want to delete this admin? This action cannot be undone.")) {
       try {
-        // Mock API call
+        await api.delete(`/admins/${id}`);
         toast.success("Admin deleted successfully");
         fetchAdmins();
       } catch (error) {
-        toast.error("Failed to delete admin");
+        console.error('Failed to delete admin:', error);
+        toast.error(error.response?.data?.error || "Failed to delete admin");
       }
     }
   };
@@ -113,36 +145,21 @@ const SuperAdminAdmins = () => {
       {showForm && (
         <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
           <h2 className="text-xl font-semibold text-teal mb-4">
-            Create New Admin
+            {editingId ? 'Edit Admin' : 'Create New Admin'}
           </h2>
           <form onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  First Name
-                </label>
-                <input
-                  type="text"
-                  name="firstName"
-                  value={formData.firstName}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-medium-green"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Last Name
-                </label>
-                <input
-                  type="text"
-                  name="lastName"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-medium-green"
-                  required
-                />
-              </div>
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Full Name
+              </label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-medium-green"
+                required
+              />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -163,33 +180,65 @@ const SuperAdminAdmins = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Phone
                 </label>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-medium-green"
-                  required
-                />
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <span className="text-gray-500">+251</span>
+                  </div>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className="w-full pl-16 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-medium-green"
+                    placeholder="9XX XXX XXX"
+                    required
+                  />
+                </div>
               </div>
             </div>
 
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Condominium
-              </label>
-              <select
-                name="condominiumId"
-                value={formData.condominiumId}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-medium-green"
-                required
-              >
-                <option value="">Select Condominium</option>
-                <option value="1">Sunset Heights</option>
-                <option value="2">Ocean View</option>
-                <option value="3">Garden Plaza</option>
-              </select>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Assigned Condominium
+                </label>
+                <select
+                  name="assignedCondominium"
+                  value={formData.assignedCondominium}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-medium-green"
+                >
+                  <option value="">Select Condominium</option>
+                  {condominiums.map((condo) => (
+                    <option key={condo.id} value={condo.name}>
+                      {condo.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Password {editingId && '(leave blank to keep current)'}
+                </label>
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:border-medium-green"
+                    required={!editingId}
+                    placeholder={editingId ? "Leave blank to keep current" : "Enter password"}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                  >
+                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                  </button>
+                </div>
+              </div>
             </div>
 
             <div className="flex space-x-4">
@@ -197,7 +246,7 @@ const SuperAdminAdmins = () => {
                 type="submit"
                 className="bg-medium-green hover:bg-teal text-white px-6 py-2 rounded-lg transition-colors"
               >
-                Create Admin
+                {editingId ? 'Update Admin' : 'Create Admin'}
               </button>
               <button
                 type="button"
@@ -229,9 +278,7 @@ const SuperAdminAdmins = () => {
                 <th className="px-6 py-3 text-left text-xs font-medium text-dark-blue uppercase tracking-wider">
                   Status
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-dark-blue uppercase tracking-wider">
-                  Created
-                </th>
+
                 <th className="px-6 py-3 text-left text-xs font-medium text-dark-blue uppercase tracking-wider">
                   Actions
                 </th>
@@ -247,7 +294,10 @@ const SuperAdminAdmins = () => {
                       </div>
                       <div>
                         <div className="font-medium text-gray-900">
-                          {admin.firstName} {admin.lastName}
+                          {admin.name}
+                        </div>
+                        <div className="text-sm text-gray-500">
+                          {admin.role}
                         </div>
                       </div>
                     </div>
@@ -257,28 +307,19 @@ const SuperAdminAdmins = () => {
                     <div className="text-sm text-gray-500">{admin.phone}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {admin.condominium?.name}
+                    {admin.assignedCondominium || 'Not Assigned'}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span
-                      className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                        admin.status === "ACTIVE"
-                          ? "bg-green-100 text-green-800"
-                          : "bg-red-100 text-red-800"
-                      }`}
-                    >
-                      {admin.status}
+                    <span className="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                      ACTIVE
                     </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {new Date(admin.createdAt).toLocaleDateString()}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <div className="flex space-x-2">
-                      <button className="text-blue-600 hover:text-blue-900">
-                        <Eye size={16} />
-                      </button>
-                      <button className="text-green-600 hover:text-green-900">
+                      <button 
+                        onClick={() => handleEdit(admin)}
+                        className="text-green-600 hover:text-green-900"
+                      >
                         <Edit size={16} />
                       </button>
                       <button

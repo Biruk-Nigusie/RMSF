@@ -7,11 +7,13 @@ const SuperAdminCondominiums = () => {
   const [condominiums, setCondominiums] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
+  const [editingId, setEditingId] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
     address: "",
-    totalUnits: "",
     totalBlocks: "",
+    roomsPerFloor: "",
+    floorsPerBlock: "",
     amenities: "",
     description: "",
   });
@@ -39,34 +41,59 @@ const SuperAdminCondominiums = () => {
         name: formData.name,
         location: formData.address,
         totalBlocks: parseInt(formData.totalBlocks),
+        roomsPerFloor: formData.roomsPerFloor ? parseInt(formData.roomsPerFloor) : null,
+        floorsPerBlock: formData.floorsPerBlock ? parseInt(formData.floorsPerBlock) : null,
       };
       
-      await condominiumAPI.create(payload);
-      toast.success("Condominium created successfully");
+      if (editingId) {
+        await condominiumAPI.update(editingId, payload);
+        toast.success("Condominium updated successfully");
+      } else {
+        await condominiumAPI.create(payload);
+        toast.success("Condominium created successfully");
+      }
+      
       setShowForm(false);
+      setEditingId(null);
       setFormData({
         name: "",
         address: "",
-        totalUnits: "",
         totalBlocks: "",
+        roomsPerFloor: "",
+        floorsPerBlock: "",
         amenities: "",
         description: "",
       });
       fetchCondominiums();
     } catch (error) {
-      console.error('Failed to create condominium:', error);
-      toast.error(error.response?.data?.error || "Failed to create condominium");
+      console.error('Failed to save condominium:', error);
+      toast.error(error.response?.data?.error || "Failed to save condominium");
     }
+  };
+
+  const handleEdit = (condo) => {
+    setEditingId(condo.id);
+    setFormData({
+      name: condo.name,
+      address: condo.location,
+      totalBlocks: condo.totalBlocks.toString(),
+      roomsPerFloor: condo.roomsPerFloor ? condo.roomsPerFloor.toString() : "",
+      floorsPerBlock: condo.floorsPerBlock ? condo.floorsPerBlock.toString() : "",
+      amenities: "",
+      description: "",
+    });
+    setShowForm(true);
   };
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this condominium?")) {
       try {
-        // Mock API call
+        await condominiumAPI.delete(id);
         toast.success("Condominium deleted successfully");
         fetchCondominiums();
       } catch (error) {
-        toast.error("Failed to delete condominium");
+        console.error('Failed to delete condominium:', error);
+        toast.error(error.response?.data?.error || "Failed to delete condominium");
       }
     }
   };
@@ -110,9 +137,9 @@ const SuperAdminCondominiums = () => {
           </p>
         </div>
         <div className="bg-white rounded-lg shadow-sm p-6">
-          <h3 className="text-lg font-semibold text-teal">Total Units</h3>
+          <h3 className="text-lg font-semibold text-teal">Total Blocks</h3>
           <p className="text-2xl font-bold text-dark-blue">
-            {condominiums.reduce((sum, condo) => sum + condo.totalUnits, 0)}
+            {condominiums.reduce((sum, condo) => sum + condo.totalBlocks, 0)}
           </p>
         </div>
         <div className="bg-white rounded-lg shadow-sm p-6">
@@ -165,20 +192,7 @@ const SuperAdminCondominiums = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Total Units
-                </label>
-                <input
-                  type="number"
-                  name="totalUnits"
-                  value={formData.totalUnits}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-medium-green"
-                  required
-                />
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Total Blocks
@@ -187,6 +201,32 @@ const SuperAdminCondominiums = () => {
                   type="number"
                   name="totalBlocks"
                   value={formData.totalBlocks}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-medium-green"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Floors Per Block
+                </label>
+                <input
+                  type="number"
+                  name="floorsPerBlock"
+                  value={formData.floorsPerBlock}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-medium-green"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Rooms Per Floor
+                </label>
+                <input
+                  type="number"
+                  name="roomsPerFloor"
+                  value={formData.roomsPerFloor}
                   onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-medium-green"
                   required
@@ -267,21 +307,27 @@ const SuperAdminCondominiums = () => {
 
             <div className="flex items-center space-x-2 text-gray-600 mb-4">
               <MapPin size={16} />
-              <span className="text-sm">{condo.address}</span>
+              <span className="text-sm">{condo.location}</span>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 mb-4">
-              <div className="text-center">
-                <p className="text-2xl font-bold text-dark-blue">
-                  {condo.totalUnits}
-                </p>
-                <p className="text-sm text-gray-600">Units</p>
-              </div>
+            <div className="grid grid-cols-3 gap-4 mb-4">
               <div className="text-center">
                 <p className="text-2xl font-bold text-dark-blue">
                   {condo.totalBlocks}
                 </p>
                 <p className="text-sm text-gray-600">Blocks</p>
+              </div>
+              <div className="text-center">
+                <p className="text-2xl font-bold text-dark-blue">
+                  {condo.floorsPerBlock || 'N/A'}
+                </p>
+                <p className="text-sm text-gray-600">Floors/Block</p>
+              </div>
+              <div className="text-center">
+                <p className="text-2xl font-bold text-dark-blue">
+                  {condo.roomsPerFloor || 'N/A'}
+                </p>
+                <p className="text-sm text-gray-600">Rooms/Floor</p>
               </div>
             </div>
 
@@ -320,10 +366,10 @@ const SuperAdminCondominiums = () => {
                 Created {new Date(condo.createdAt).toLocaleDateString()}
               </span>
               <div className="flex space-x-2">
-                <button className="text-blue-600 hover:text-blue-900">
-                  <Eye size={16} />
-                </button>
-                <button className="text-green-600 hover:text-green-900">
+                <button 
+                  onClick={() => handleEdit(condo)}
+                  className="text-green-600 hover:text-green-900"
+                >
                   <Edit size={16} />
                 </button>
                 <button

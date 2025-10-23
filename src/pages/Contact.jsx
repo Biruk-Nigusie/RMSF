@@ -35,6 +35,15 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Validate Ethiopian phone number format
+    const phoneRegex = /^\+251[79]\d{8}$/;
+    const fullPhone = `+251${formData.phone}`;
+    if (!phoneRegex.test(fullPhone)) {
+      alert("Invalid phone number. Must start with 7 or 9 followed by 8 digits");
+      return;
+    }
+    
     setIsSubmitting(true);
 
     // Simulate API call

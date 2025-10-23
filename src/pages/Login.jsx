@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { loginUser, clearError } from "../store/authSlice";
 import { toast } from "react-toastify";
+import { Eye, EyeOff } from "lucide-react";
 import loginImage from "../assets/login.svg";
 import bgImage from "../assets/bg.jpg";
 
@@ -12,6 +13,7 @@ const Login = () => {
     password: "",
     userType: "resident",
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -26,8 +28,17 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Validate Ethiopian phone number format (9 digits: 900000000)
+    const phoneRegex = /^[79]\d{8}$/;
+    if (!phoneRegex.test(formData.phone)) {
+      toast.error("Invalid phone number. Must be 9 digits starting with 7 or 9");
+      return;
+    }
+    const fullPhone = `+251${formData.phone}`;
+    
     try {
-      const result = await dispatch(loginUser(formData));
+      const result = await dispatch(loginUser({...formData, phone: fullPhone}));
       if (result.type === "auth/login/fulfilled") {
         toast.success("Login successful!");
         navigate("/dashboard");
@@ -163,15 +174,24 @@ const Login = () => {
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Password
                   </label>
-                  <input
-                    type="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                    placeholder="Enter your password"
-                    required
-                  />
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      placeholder="Enter your password"
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    >
+                      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </button>
+                  </div>
                 </div>
 
                 {/* Forgot Password */}

@@ -8,9 +8,8 @@ const SuperAdminSidebar = ({ sidebarOpen, setSidebarOpen }) => {
     { path: '/super-admin-dashboard', icon: Home, label: 'Dashboard' },
     { path: '/super-admin/condominiums', icon: Building, label: 'Condominiums' },
     { path: '/super-admin/admins', icon: Shield, label: 'Admins' },
-    { path: '/super-admin/audit', icon: Activity, label: 'Audit Logs' },
-    { path: '/super-admin/integrations', icon: Settings, label: 'Integrations' },
-    { path: '/super-admin/backup', icon: Database, label: 'Data Management' },
+    { path: '/super-admin/audit-logs', icon: Activity, label: 'Audit Logs' },
+    { path: '/super-admin/data-management', icon: Database, label: 'Data Management' },
   ]
 
   const handleLinkClick = () => {
