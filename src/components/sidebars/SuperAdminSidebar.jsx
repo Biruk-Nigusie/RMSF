@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
-import { Home, Building, Shield, Activity, Settings, Database } from 'lucide-react'
+import { Home, Building, Shield, Activity, Database } from 'lucide-react'
 
 const SuperAdminSidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const location = useLocation()
@@ -8,6 +8,7 @@ const SuperAdminSidebar = ({ sidebarOpen, setSidebarOpen }) => {
     { path: '/super-admin-dashboard', icon: Home, label: 'Dashboard' },
     { path: '/super-admin/condominiums', icon: Building, label: 'Condominiums' },
     { path: '/super-admin/admins', icon: Shield, label: 'Admins' },
+    { path: '/super-admin/create-admin', icon: Shield, label: 'Create Admin' },
     { path: '/super-admin/audit-logs', icon: Activity, label: 'Audit Logs' },
     { path: '/super-admin/data-management', icon: Database, label: 'Data Management' },
   ]
